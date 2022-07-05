@@ -5,6 +5,12 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViagemAPI", "ViagemAPI\ViagemAPI.csproj", "{1B10678F-A1B4-49D3-BD6C-D37BDA62A53A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CFE85D20-8742-45C0-98DE-161159929D7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViagemApiRepositoryTest", "ViagemApiRepositoryTest\ViagemApiRepositoryTest.csproj", "{68B56147-40E4-41C3-B1DA-17518F182A42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViagemApiServicesTest", "ViagemApiServicesTests\ViagemApiServicesTest.csproj", "{C3F00456-B412-44B0-9948-AA6D73082DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,21 @@ Global
 		{1B10678F-A1B4-49D3-BD6C-D37BDA62A53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B10678F-A1B4-49D3-BD6C-D37BDA62A53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B10678F-A1B4-49D3-BD6C-D37BDA62A53A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B56147-40E4-41C3-B1DA-17518F182A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B56147-40E4-41C3-B1DA-17518F182A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B56147-40E4-41C3-B1DA-17518F182A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B56147-40E4-41C3-B1DA-17518F182A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3F00456-B412-44B0-9948-AA6D73082DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3F00456-B412-44B0-9948-AA6D73082DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3F00456-B412-44B0-9948-AA6D73082DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3F00456-B412-44B0-9948-AA6D73082DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68B56147-40E4-41C3-B1DA-17518F182A42} = {CFE85D20-8742-45C0-98DE-161159929D7C}
+		{C3F00456-B412-44B0-9948-AA6D73082DEE} = {CFE85D20-8742-45C0-98DE-161159929D7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {790BE54A-0211-42C0-87D9-D58CE054557D}

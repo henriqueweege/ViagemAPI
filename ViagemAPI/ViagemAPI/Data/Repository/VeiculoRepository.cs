@@ -1,5 +1,5 @@
 ﻿using ViagemAPI.Data.Dto;
-using ViagemAPI.Data.Repository.Contracts;
+using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 
 namespace ViagemAPI.Data.Repository
@@ -11,7 +11,7 @@ namespace ViagemAPI.Data.Repository
         {
             Context = context;
         }
-        public Veiculo AdicionarNovoVeiculo(VeiculoDto veiculoToPost)
+        public bool AdicionarNovoVeiculo(VeiculoDto veiculoToPost)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace ViagemAPI.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Veiculo AtualizarVeiculo(int id, VeiculoDto veiculoToUpdate)
+        public bool AtualizarVeiculo(int id, VeiculoDto veiculoToUpdate)
         {
             throw new NotImplementedException();
         }

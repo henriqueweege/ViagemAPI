@@ -1,13 +1,17 @@
 ﻿using ViagemAPI.Data.Dto;
-using ViagemAPI.Data.Repository.Contracts;
+using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 
 namespace ViagemAPI.Data.Repository
 {
     public class MotoristaRepository : IMotoristaRepository
     {
-
-        public Motorista AtualizarMotorista(int id, MotoristaDto veiculoToUpdate)
+        public DataContext Context { get; set; }
+        public MotoristaRepository(DataContext context)
+        {
+            Context = context;
+        }
+        public bool AtualizarMotorista(int id, MotoristaDto veiculoToUpdate)
         {
             throw new NotImplementedException();
         }
@@ -22,7 +26,7 @@ namespace ViagemAPI.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Motorista CriarNovoVeiculo(MotoristaDto veiculoToPost)
+        public bool CriarNovoVeiculo(MotoristaDto veiculoToPost)
         {
             throw new NotImplementedException();
         }
