@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemAPIIntegrationTests.csproj": {}
+    "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj": {}
   },
   "projects": {
-    "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemAPIIntegrationTests.csproj": {
+    "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemAPIIntegrationTests.csproj",
-        "projectName": "ViagemAPIIntegrationTests",
-        "projectPath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemAPIIntegrationTests.csproj",
+        "projectUniqueName": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj",
+        "projectName": "ViagemApiIntegrationTests",
+        "projectPath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj",
         "packagesPath": "C:\\Users\\henri\\.nuget\\packages\\",
         "outputPath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\obj\\",
         "projectStyle": "PackageReference",

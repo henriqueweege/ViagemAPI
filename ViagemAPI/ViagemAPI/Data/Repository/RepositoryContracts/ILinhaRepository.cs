@@ -8,7 +8,8 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
         IEnumerable<Linha> BuscarTodasAsLinhas();
         Linha BuscarLinhaPorId(int id);
         bool DeletarLinhaPorId(int id);
-        bool AtualizarLinha(int id, LinhaDto veiculoToUpdate);
-        bool CriarNovaLinha(LinhaDto veiculoToPost);
+        Linha AtualizarLinha(Linha linhaParaAtualizar);
+        Linha CriarNovaLinha(LinhaDto linhaParaCriar);
+        Linha BuscarLinhaPeloNumero(int numero);
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tuuzdGUbqpoO4ilcfrSLUmHNJau1CwA+P8NPwzuCzOE94ZTEKh96ipWR4BuoDonYiOk1G2DajYsdFNRfoDzDHg==",
+  "dgSpecHash": "z9ZfAxK8dwco9abCfomjdcoduIzX9H0hzTvJvlcD+35swr9ouCd3izS25sycE4v6xQpDtClx6WGT8s+/6OsBkw==",
   "success": true,
-  "projectFilePath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemAPIIntegrationTests.csproj",
+  "projectFilePath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\henri\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",

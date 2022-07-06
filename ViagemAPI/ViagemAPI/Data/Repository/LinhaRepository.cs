@@ -16,33 +16,50 @@ namespace ViagemAPI.Data.Repository
             LinhaServices = linhaServices;
         }
         
-        public bool CriarNovaLinha(LinhaDto linhaDto)
+        public Linha CriarNovaLinha(LinhaDto linhaDto)
         {
             try
             {
                 var linhaMapeada = LinhaServices.TransformaDtoEmObjeto(linhaDto);
                 Context.Add(linhaMapeada);
-                if (Context.SaveChanges() > 0) return true;
-                return false;
+                if (Context.SaveChanges() > 0) return Context.Linha.OrderBy(l => l.Id).LastOrDefault(l => l.Numero == linhaDto.Numero && 
+                                                                                l.Nome == linhaDto.Nome &&
+                                                                                l.Origem == linhaDto.Origem &&
+                                                                                l.Destino == linhaDto.Destino);
+                return null;
             }
             catch(Exception exception)
             {
                 throw exception;
             }
-            return true;
         }
 
 
-        public bool AtualizarLinha(int id, LinhaDto veiculoToUpdate)
+        public Linha AtualizarLinha(Linha linhaParaAtualizar)
         {
-            Context.Update(veiculoToUpdate);
-            if (Context.SaveChanges() > 0) return true;
-            return false;
+            try
+            {
+
+                Context.Linha.Update(linhaParaAtualizar);
+                if (Context.SaveChanges() > 0) return linhaParaAtualizar;
+                return null;
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
         }
 
         public Linha BuscarLinhaPorId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Context.Linha.FirstOrDefault(l => l.Id == id);
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
         }
 
         public IEnumerable<Linha> BuscarTodasAsLinhas()
@@ -62,7 +79,36 @@ namespace ViagemAPI.Data.Repository
 
         public bool DeletarLinhaPorId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var linhaParaDeletar = Context.Linha.FirstOrDefault(l => l.Id == id);
+                if (linhaParaDeletar != null) Context.Linha.Remove(linhaParaDeletar);
+                else
+                {
+                    return false;
+                }
+                if (Context.SaveChanges() > 0) return true;
+                return false;
+
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public Linha BuscarLinhaPeloNumero(int numero)
+        {
+            try
+            {
+                var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
+                if (linha != null) return linha;
+                return null;
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
         }
     }
 }
