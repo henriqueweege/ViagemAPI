@@ -1,3 +1,5 @@
+using ViagemAPI.Data;
+using ViagemAPI.Data.Repository;
 using ViagemAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<LinhaServices, LinhaServices>();
+builder.Services.AddScoped<LinhaRepository, LinhaRepository>();
+builder.Services.AddScoped<DataContext, DataContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

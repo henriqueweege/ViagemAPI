@@ -70,3 +70,5 @@ C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\refint\ViagemAP
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ViagemAPI.pdb
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ViagemAPI.genruntimeconfig.cache
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ref\ViagemAPI.dll
+C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\bin\Debug\net6.0\xunit.abstractions.dll
+C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\bin\Debug\net6.0\xunit.core.dll

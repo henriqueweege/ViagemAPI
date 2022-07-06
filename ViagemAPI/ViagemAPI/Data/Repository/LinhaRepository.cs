@@ -21,6 +21,9 @@ namespace ViagemAPI.Data.Repository
             try
             {
                 var linhaMapeada = LinhaServices.TransformaDtoEmObjeto(linhaDto);
+                Context.Add(linhaMapeada);
+                if (Context.SaveChanges() > 0) return true;
+                return false;
             }
             catch(Exception exception)
             {
@@ -44,7 +47,16 @@ namespace ViagemAPI.Data.Repository
 
         public IEnumerable<Linha> BuscarTodasAsLinhas()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Linha> linhasExistentes = Context.Linha;
+                if (linhasExistentes != null) return linhasExistentes;
+                return null;
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
         }
 
 
