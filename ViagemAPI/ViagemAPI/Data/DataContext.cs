@@ -12,7 +12,7 @@ namespace ViagemAPI.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string stringconexao = "server=localhost;DataBase=bytebankBD;Uid=root;Pwd=root";
+            string stringconexao = "server=localhost;DataBase=viagemDb;Uid=root;Pwd=root";
             optionsBuilder.UseMySql(stringconexao, ServerVersion.AutoDetect(stringconexao));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

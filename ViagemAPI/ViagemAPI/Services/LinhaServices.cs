@@ -12,20 +12,21 @@ namespace ViagemAPI.Services
         {
             Mapper = mapper;
         }
-        public Linha TransformaDtoEmObjeto(LinhaDto dto)
+
+        public Linha TransformaDtoEmObjeto(LinhaDto linhaDto)
         {
+            Linha linhaMapeada;
             try
             {
-                Linha linha = Mapper.Map<Linha>(dto);
-                if (linha != null) return linha;
-                throw new Exception("Erro no mapeamento");
-
+                linhaMapeada = Mapper.Map<Linha>(linhaDto);
             }
             catch(Exception exception)
             {
                 throw exception;
             }
-            
+            if (linhaMapeada != null) return linhaMapeada;
+
+            throw new Exception("Erro no mapeamento");
         }
     }
 }

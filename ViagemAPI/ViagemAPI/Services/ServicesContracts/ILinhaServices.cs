@@ -5,6 +5,6 @@ namespace ViagemAPI.Services.ServicesContracts
 {
     public interface ILinhaServices
     {
-        public Linha TransformaDtoEmObjeto(LinhaDto objeto);
+        public Linha TransformaDtoEmObjeto(LinhaDto linhaDto);
     }
 }

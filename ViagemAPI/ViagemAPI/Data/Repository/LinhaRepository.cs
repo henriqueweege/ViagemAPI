@@ -1,16 +1,35 @@
 ﻿using ViagemAPI.Data.Dto;
 using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
+using ViagemAPI.Services;
+
 
 namespace ViagemAPI.Data.Repository
 {
     public class LinhaRepository : ILinhaRepository
     {
+        public LinhaServices LinhaServices { get; set; }
         public DataContext Context { get; set; }
-        public LinhaRepository(DataContext context)
+        public LinhaRepository(DataContext context, LinhaServices linhaServices)
         {
             Context = context;
+            LinhaServices = linhaServices;
         }
+        
+        public bool CriarNovaLinha(LinhaDto linhaDto)
+        {
+            try
+            {
+                var linhaMapeada = LinhaServices.TransformaDtoEmObjeto(linhaDto);
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+            return true;
+        }
+
+
         public bool AtualizarLinha(int id, LinhaDto veiculoToUpdate)
         {
             Context.Update(veiculoToUpdate);
@@ -28,10 +47,6 @@ namespace ViagemAPI.Data.Repository
             throw new NotImplementedException();
         }
 
-        public bool CriarNovaLinha(LinhaDto veiculoToPost)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool DeletarLinhaPorId(int id)
         {
