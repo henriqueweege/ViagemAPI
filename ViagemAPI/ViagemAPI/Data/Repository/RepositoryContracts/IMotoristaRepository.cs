@@ -5,10 +5,11 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface IMotoristaRepository
     {
+        Motorista CriarNovoMotorista(MotoristaDto motoristaParaCriar);
         IEnumerable<Motorista> BuscarTodosOsMotoristas();
         Motorista BuscarMotoristaPorId(int id);
+        Motorista BuscarMotoristaPeloCpf(string cpf);
         bool DeletarMotoristaPorId(int id);
-        bool AtualizarMotorista(int id, MotoristaDto veiculoToUpdate);
-        bool CriarNovoVeiculo(MotoristaDto veiculoToPost);
+        Motorista AtualizarMotorista(Motorista motoristaParaAtualizar);
     }
 }

@@ -51,6 +51,17 @@ namespace ViagemAPI.Controller
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("BuscarLinhaPorNumero/{numero}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Linha> BuscarLinhaPorNumero(int numero)
+        {
+            var linha = Repository.BuscarLinhaPeloNumero(numero);
+            if (linha != null) return Ok(linha);
+            return NotFound();
+        }
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,20 +77,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeletarLinha(int id)
         {
-            var linhaDeletada = Repository.DeletarLinhaPorId(id);
-            if (linhaDeletada != null) return Ok();
+            var deletaLinha = Repository.DeletarLinhaPorId(id);
+            if (deletaLinha != false) return Ok();
             return NotFound();
         }
 
-        [HttpGet]
-        [Route("BuscarLinhaPorNumero/{numero}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Linha> BuscarLinhaPorNumero(int numero)
-        {
-            var linha = Repository.BuscarLinhaPeloNumero(numero);
-            if (linha != null) return Ok(linha);
-            return NotFound();
-        }
     }
 }

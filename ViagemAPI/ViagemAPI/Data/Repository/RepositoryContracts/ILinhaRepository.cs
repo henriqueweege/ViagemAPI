@@ -5,11 +5,11 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface ILinhaRepository
     {
+        Linha CriarNovaLinha(LinhaDto linhaParaCriar);
         IEnumerable<Linha> BuscarTodasAsLinhas();
         Linha BuscarLinhaPorId(int id);
-        bool DeletarLinhaPorId(int id);
-        Linha AtualizarLinha(Linha linhaParaAtualizar);
-        Linha CriarNovaLinha(LinhaDto linhaParaCriar);
         Linha BuscarLinhaPeloNumero(int numero);
+        Linha AtualizarLinha(Linha linhaParaAtualizar);
+        bool DeletarLinhaPorId(int id);
     }
 }

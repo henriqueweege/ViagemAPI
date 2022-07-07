@@ -8,40 +8,24 @@ namespace ViagemAPI.Data.Repository
 {
     public class LinhaRepository : ILinhaRepository
     {
-        public LinhaServices LinhaServices { get; set; }
+        public LinhaServices Services { get; set; }
         public DataContext Context { get; set; }
         public LinhaRepository(DataContext context, LinhaServices linhaServices)
         {
             Context = context;
-            LinhaServices = linhaServices;
+            Services = linhaServices;
         }
         
         public Linha CriarNovaLinha(LinhaDto linhaDto)
         {
             try
             {
-                var linhaMapeada = LinhaServices.TransformaDtoEmObjeto(linhaDto);
+                var linhaMapeada = Services.TransformaDtoEmObjeto(linhaDto);
                 Context.Add(linhaMapeada);
                 if (Context.SaveChanges() > 0) return Context.Linha.OrderBy(l => l.Id).LastOrDefault(l => l.Numero == linhaDto.Numero && 
                                                                                 l.Nome == linhaDto.Nome &&
                                                                                 l.Origem == linhaDto.Origem &&
                                                                                 l.Destino == linhaDto.Destino);
-                return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
-        }
-
-
-        public Linha AtualizarLinha(Linha linhaParaAtualizar)
-        {
-            try
-            {
-
-                Context.Linha.Update(linhaParaAtualizar);
-                if (Context.SaveChanges() > 0) return linhaParaAtualizar;
                 return null;
             }
             catch(Exception exception)
@@ -75,6 +59,34 @@ namespace ViagemAPI.Data.Repository
                 throw exception;
             }
         }
+        public Linha BuscarLinhaPeloNumero(int numero)
+        {
+            try
+            {
+                var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
+                if (linha != null) return linha;
+                return null;
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public Linha AtualizarLinha(Linha linhaParaAtualizar)
+        {
+            try
+            {
+
+                Context.Linha.Update(linhaParaAtualizar);
+                if (Context.SaveChanges() > 0) return linhaParaAtualizar;
+                return null;
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+        }
 
 
         public bool DeletarLinhaPorId(int id)
@@ -97,18 +109,5 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Linha BuscarLinhaPeloNumero(int numero)
-        {
-            try
-            {
-                var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
-                if (linha != null) return linha;
-                return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
-        }
     }
 }

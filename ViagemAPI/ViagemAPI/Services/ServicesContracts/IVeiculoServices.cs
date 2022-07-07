@@ -3,8 +3,8 @@ using ViagemAPI.Model;
 
 namespace ViagemAPI.Services.ServicesContracts
 {
-    public interface ILinhaServices
+    public interface IVeiculoService
     {
-        public Linha TransformaDtoEmObjeto(LinhaDto linhaParaMapear);
+        public Veiculo TransformaDtoEmObjeto(VeiculoDto veiculoParaMapear);
     }
 }
