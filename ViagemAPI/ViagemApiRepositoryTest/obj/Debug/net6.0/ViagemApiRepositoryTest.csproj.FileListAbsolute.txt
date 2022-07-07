@@ -1,5 +1,0 @@
-C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemApiRepositoryTest\obj\Debug\net6.0\ViagemApiRepositoryTest.csproj.AssemblyReference.cache
-C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemApiRepositoryTest\obj\Debug\net6.0\ViagemApiRepositoryTest.GeneratedMSBuildEditorConfig.editorconfig
-C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemApiRepositoryTest\obj\Debug\net6.0\ViagemApiRepositoryTest.AssemblyInfoInputs.cache
-C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemApiRepositoryTest\obj\Debug\net6.0\ViagemApiRepositoryTest.AssemblyInfo.cs
-C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemApiRepositoryTest\obj\Debug\net6.0\ViagemApiRepositoryTest.csproj.CoreCompileInputs.cache
