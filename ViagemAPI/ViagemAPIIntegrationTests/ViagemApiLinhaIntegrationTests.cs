@@ -1,7 +1,3 @@
-
-
-using ViagemApi.Client;
-
 namespace ViagemAPIIntegrationTests
 {
     public class ViagemApiLinhaIntegrationTests : IClassFixture<ViagemApiFixture>
@@ -15,7 +11,7 @@ namespace ViagemAPIIntegrationTests
         public async Task AdicionarLinhaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var linhaDtoTest = new LinhaDto()
+            var linhaDto = new LinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero= 1,
@@ -24,17 +20,18 @@ namespace ViagemAPIIntegrationTests
             };
 
             //act
-            var linhaResposta = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDtoTest);
+            var linhaResposta = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
 
 
             //assert
-            Assert.Equal(linhaDtoTest.Nome, linhaResposta.Nome);
+            Assert.Equal(linhaDto.Nome, linhaResposta.Nome);
         }
 
         [Fact]
         public async Task BuscarTodasAsLinhasDeveriaRetornarMaisDeUmObjetoValido()
         {
             //arrange
+
             //act
             IEnumerable<Linha> linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
             
@@ -47,10 +44,19 @@ namespace ViagemAPIIntegrationTests
         public async Task BuscarLinhaPorIdDeveriaRetornarObjetoValido()
         {
             //arrange
+            var linhaDto = new LinhaDto()
+            {
+                Nome = "LinhaTeste",
+                Numero = 1,
+                Origem = "Qualquer",
+                Destino = "Qualquer 2"
+            };
+
+            var linhaAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
             //act
-            var linha = await ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(2);
+            var linha = await ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(linhaAdicionada.Id);
             //assert
-            Assert.NotNull(linha);
+            Assert.Equal(linha.Nome, linhaDto.Nome);
         }
 
 
@@ -58,42 +64,42 @@ namespace ViagemAPIIntegrationTests
         public async Task DeletarLinhaPorIdDeveriaExcluirLinhaCriada()
         {
             //arrange
-            var linhaDtoTest = new LinhaDto()
+            var linhaDto = new LinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero = 1,
                 Origem = "Qualquer",
                 Destino = "Qualquer 2"
             };
-            var linhaResposta = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDtoTest);
+            var linhaResposta = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
 
             //act
             await ViagemApiFixture.ViagemApiClient.DeletarLinhaPorId(linhaResposta.Id);
-            var isCompleted =  ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(2).IsCompletedSuccessfully;
+            var existe =  ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(linhaResposta.Id).IsCompletedSuccessfully;
             //assert
-            Assert.False(isCompleted);
+            Assert.False(existe);
 
             
         }
 
         [Fact]
-        public async Task BuscarLinhaPorNumeroDeveriaRetornarObjetoValidoECorreto()
+        public async Task BuscarLinhaPorNumeroDeveriaRetornarObjetoValido()
         {
             //arrange
 
             Random randNum = new Random();
            
 
-            var linhaDtoTest = new LinhaDto()
+            var linhaDto = new LinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero = randNum.Next(),
                 Origem = "Qualquer",
                 Destino = "Qualquer 2"
             };
-            var linhaCriada = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDtoTest);
+            var linhaCriada = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
             //act
-            var linhaBuscada = await ViagemApiFixture.ViagemApiClient.BuscarLinhaPorNumeroAsync(linhaDtoTest.Numero);
+            var linhaBuscada = await ViagemApiFixture.ViagemApiClient.BuscarLinhaPorNumeroAsync(linhaDto.Numero);
 
             //assert
             Assert.Equal(linhaBuscada.Id, linhaCriada.Id);

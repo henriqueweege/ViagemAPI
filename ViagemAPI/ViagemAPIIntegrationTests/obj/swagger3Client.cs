@@ -498,7 +498,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> MotoristaAsync(MotoristaDto body)
+        public System.Threading.Tasks.Task<Motorista> AdicionarMotorista(MotoristaDto body)
         {
             return MotoristaAsync(body, System.Threading.CancellationToken.None);
         }
@@ -574,7 +574,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Motorista>> MotoristaAllAsync()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Motorista>> BuscarTodosOsMotoristas()
         {
             return MotoristaAllAsync(System.Threading.CancellationToken.None);
         }
@@ -647,7 +647,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> Motorista2Async(Motorista body)
+        public System.Threading.Tasks.Task<Motorista> AtualizarMotorista(Motorista body)
         {
             return Motorista2Async(body, System.Threading.CancellationToken.None);
         }
@@ -723,7 +723,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> Motorista3Async(int id)
+        public System.Threading.Tasks.Task<Motorista> BuscarMotoristaPorId(int id)
         {
             return Motorista3Async(id, System.Threading.CancellationToken.None);
         }
@@ -800,7 +800,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task Motorista4Async(int id)
+        public System.Threading.Tasks.Task DeletarMotoristaPorId(int id)
         {
             return Motorista4Async(id, System.Threading.CancellationToken.None);
         }
@@ -873,7 +873,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> BuscarMotoristaPeloCpfAsync(string cpf)
+        public System.Threading.Tasks.Task<Motorista> BuscarMotoristaPorCpf(string cpf)
         {
             return BuscarMotoristaPeloCpfAsync(cpf, System.Threading.CancellationToken.None);
         }
@@ -951,7 +951,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> VeiculoAsync(VeiculoDto body)
+        public System.Threading.Tasks.Task<Veiculo> AdicionarVeiculo(VeiculoDto body)
         {
             return VeiculoAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1027,7 +1027,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Veiculo>> VeiculoAllAsync()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Veiculo>> BuscarTodosOsVeiculos()
         {
             return VeiculoAllAsync(System.Threading.CancellationToken.None);
         }
@@ -1100,7 +1100,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> Veiculo2Async(Veiculo body)
+        public System.Threading.Tasks.Task<Veiculo> AtualizarVeiculo(Veiculo body)
         {
             return Veiculo2Async(body, System.Threading.CancellationToken.None);
         }
@@ -1176,7 +1176,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> Veiculo3Async(int id)
+        public System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPorId(int id)
         {
             return Veiculo3Async(id, System.Threading.CancellationToken.None);
         }
@@ -1253,7 +1253,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task Veiculo4Async(int id)
+        public System.Threading.Tasks.Task DeletarVeiculoPorId(int id)
         {
             return Veiculo4Async(id, System.Threading.CancellationToken.None);
         }
@@ -1326,7 +1326,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPelaPlacaAsync(string cpf)
+        public System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPelaPlaca(string cpf)
         {
             return BuscarVeiculoPelaPlacaAsync(cpf, System.Threading.CancellationToken.None);
         }
@@ -1404,7 +1404,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> ViagemAsync(ViagemDto body)
+        public System.Threading.Tasks.Task<Viagem> AdicionaViagem(ViagemDto body)
         {
             return ViagemAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1480,7 +1480,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Viagem>> ViagemAllAsync()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Viagem>> BuscarTodosAsViagens()
         {
             return ViagemAllAsync(System.Threading.CancellationToken.None);
         }
@@ -1553,7 +1553,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> Viagem2Async(Viagem body)
+        public System.Threading.Tasks.Task<Viagem> AtualizarViagem(Viagem body)
         {
             return Viagem2Async(body, System.Threading.CancellationToken.None);
         }
@@ -1629,7 +1629,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> Viagem3Async(int id)
+        public System.Threading.Tasks.Task<Viagem> BuscarViagemPorId(int id)
         {
             return Viagem3Async(id, System.Threading.CancellationToken.None);
         }
@@ -1706,7 +1706,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task Viagem4Async(int id)
+        public System.Threading.Tasks.Task DeletarViagemPorId(int id)
         {
             return Viagem4Async(id, System.Threading.CancellationToken.None);
         }
@@ -1779,7 +1779,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> BuscarViagemPorDataAsync(System.DateTimeOffset? dataParaBusca)
+        public System.Threading.Tasks.Task<IEnumerable<Viagem>> BuscarViagemPelaData(System.DateTimeOffset? dataParaBusca)
         {
             return BuscarViagemPorDataAsync(dataParaBusca, System.Threading.CancellationToken.None);
         }
@@ -1787,7 +1787,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Viagem> BuscarViagemPorDataAsync(System.DateTimeOffset? dataParaBusca, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<IEnumerable<Viagem>> BuscarViagemPorDataAsync(System.DateTimeOffset? dataParaBusca, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem/BuscarViagemPorData?");
@@ -1825,7 +1825,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Viagem>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IEnumerable<Viagem>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1841,7 +1841,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Viagem);
+                        return default(IEnumerable<Viagem>);
                     }
                     finally
                     {

@@ -55,7 +55,7 @@ namespace ViagemAPI.Controller
         [Route("BuscarMotoristaPeloCpf")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Motorista> BuscarMotoristaPorNumero(string cpf)
+        public ActionResult<Motorista> BuscarMotoristaPorCpf(string cpf)
         {
             var motorista = Repository.BuscarMotoristaPeloCpf(cpf);
             if (motorista != null) return Ok(motorista);

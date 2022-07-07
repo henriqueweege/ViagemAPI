@@ -55,7 +55,7 @@ namespace ViagemAPI.Controller
         [Route("BuscarViagemPorData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Viagem> BuscarViagemPorData(DateTime dataParaBusca)
+        public ActionResult<IEnumerable<Viagem>> BuscarViagemPorData(DateTime dataParaBusca)
         {
             var viagem = Repository.BuscarViagemPorData(dataParaBusca);
             if (viagem != null) return Ok(viagem);

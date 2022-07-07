@@ -13,6 +13,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<LinhaServices, LinhaServices>();
 builder.Services.AddScoped<LinhaRepository, LinhaRepository>();
 builder.Services.AddScoped<DataContext, DataContext>();
+builder.Services.AddScoped<MotoristaServices, MotoristaServices>(); 
+builder.Services.AddScoped<MotoristaRepository, MotoristaRepository>();
+builder.Services.AddScoped<VeiculoServices, VeiculoServices>();
+builder.Services.AddScoped<VeiculoRepository, VeiculoRepository>();
+builder.Services.AddScoped<ViagemServices, ViagemServices>();
+builder.Services.AddScoped<ViagemRepository, ViagemRepository>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

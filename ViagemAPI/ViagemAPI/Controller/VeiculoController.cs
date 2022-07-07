@@ -55,9 +55,9 @@ namespace ViagemAPI.Controller
         [Route("BuscarVeiculoPelaPlaca")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Veiculo> BuscarVeiculoPorNumero(string cpf)
+        public ActionResult<Veiculo> BuscarVeiculoPelaPlaca(string placa)
         {
-            var veiculo = Repository.BuscarVeiculoPelaPlaca(cpf);
+            var veiculo = Repository.BuscarVeiculoPelaPlaca(placa);
             if (veiculo != null) return Ok(veiculo);
             return NotFound();
         }
