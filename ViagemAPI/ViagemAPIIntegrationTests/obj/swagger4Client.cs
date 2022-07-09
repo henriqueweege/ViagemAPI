@@ -46,7 +46,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Linha> AdicionarLinha(LinhaDto body)
+        public System.Threading.Tasks.Task<LinhaViewModel> AdicionarLinha(LinhaDto body)
         {
             return LinhaAsync(body, System.Threading.CancellationToken.None);
         }
@@ -54,7 +54,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Linha> LinhaAsync(LinhaDto body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<LinhaViewModel> LinhaAsync(LinhaDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Linha");
@@ -90,7 +90,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Linha>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LinhaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -106,7 +106,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Linha);
+                        return default(LinhaViewModel);
                     }
                     finally
                     {
@@ -122,7 +122,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Linha>> BuscarTodasAsLinha()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LinhaViewModel>> BuscarTodasAsLinha()
         {
             return LinhaAllAsync(System.Threading.CancellationToken.None);
         }
@@ -130,7 +130,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Linha>> LinhaAllAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<LinhaViewModel>> LinhaAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Linha");
@@ -163,7 +163,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Linha>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<LinhaViewModel>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -179,7 +179,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(System.Collections.Generic.ICollection<Linha>);
+                        return default(System.Collections.Generic.ICollection<LinhaViewModel>);
                     }
                     finally
                     {
@@ -195,18 +195,23 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Linha> AtualizarLinha(Linha body)
+        public System.Threading.Tasks.Task<LinhaViewModel> AtualizarLinha(int? id, LinhaDto body)
         {
-            return Linha2Async(body, System.Threading.CancellationToken.None);
+            return Linha2Async(id, body, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Linha> Linha2Async(Linha body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<LinhaViewModel> Linha2Async(int? id, LinhaDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Linha");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Linha?");
+            if (id != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -239,7 +244,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Linha>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LinhaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -255,7 +260,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Linha);
+                        return default(LinhaViewModel);
                     }
                     finally
                     {
@@ -271,7 +276,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Linha> BuscarLinhaPorId(int id)
+        public System.Threading.Tasks.Task<LinhaViewModel> BuscarLinhaPorId(int id)
         {
             return Linha3Async(id, System.Threading.CancellationToken.None);
         }
@@ -279,7 +284,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Linha> Linha3Async(int id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<LinhaViewModel> Linha3Async(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -316,7 +321,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Linha>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LinhaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -332,7 +337,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Linha);
+                        return default(LinhaViewModel);
                     }
                     finally
                     {
@@ -390,7 +395,7 @@ namespace ViagemApi.Client
                         ProcessResponse(client_, response_);
     
                         var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200") 
+                        if (status_ == "204") 
                         {
                             return;
                         }
@@ -421,7 +426,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Linha> BuscarLinhaPorNumeroAsync(int numero)
+        public System.Threading.Tasks.Task<LinhaViewModel> BuscarLinhaPorNumeroAsync(int numero)
         {
             return BuscarLinhaPorNumeroAsync(numero, System.Threading.CancellationToken.None);
         }
@@ -429,7 +434,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Linha> BuscarLinhaPorNumeroAsync(int numero, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<LinhaViewModel> BuscarLinhaPorNumeroAsync(int numero, System.Threading.CancellationToken cancellationToken)
         {
             if (numero == null)
                 throw new System.ArgumentNullException("numero");
@@ -466,7 +471,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Linha>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LinhaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -482,7 +487,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Linha);
+                        return default(LinhaViewModel);
                     }
                     finally
                     {
@@ -498,7 +503,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> AdicionarMotorista(MotoristaDto body)
+        public System.Threading.Tasks.Task<MotoristaViewModel> AdicionarMotorista(MotoristaDto body)
         {
             return MotoristaAsync(body, System.Threading.CancellationToken.None);
         }
@@ -506,7 +511,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Motorista> MotoristaAsync(MotoristaDto body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<MotoristaViewModel> MotoristaAsync(MotoristaDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Motorista");
@@ -542,7 +547,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Motorista>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MotoristaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -558,7 +563,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Motorista);
+                        return default(MotoristaViewModel);
                     }
                     finally
                     {
@@ -574,7 +579,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Motorista>> BuscarTodosOsMotoristas()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MotoristaViewModel>> BuscarTodosOsMotoristas()
         {
             return MotoristaAllAsync(System.Threading.CancellationToken.None);
         }
@@ -582,7 +587,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Motorista>> MotoristaAllAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MotoristaViewModel>> MotoristaAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Motorista");
@@ -615,7 +620,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Motorista>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<MotoristaViewModel>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -631,7 +636,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(System.Collections.Generic.ICollection<Motorista>);
+                        return default(System.Collections.Generic.ICollection<MotoristaViewModel>);
                     }
                     finally
                     {
@@ -647,18 +652,23 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> AtualizarMotorista(Motorista body)
+        public System.Threading.Tasks.Task<MotoristaViewModel> AtualizarMotorista(int? id, MotoristaDto body)
         {
-            return Motorista2Async(body, System.Threading.CancellationToken.None);
+            return Motorista2Async(id, body, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Motorista> Motorista2Async(Motorista body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<MotoristaViewModel> Motorista2Async(int? id, MotoristaDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Motorista");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Motorista?");
+            if (id != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -691,7 +701,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Motorista>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MotoristaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -707,7 +717,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Motorista);
+                        return default(MotoristaViewModel);
                     }
                     finally
                     {
@@ -723,7 +733,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> BuscarMotoristaPorId(int id)
+        public System.Threading.Tasks.Task<MotoristaViewModel> BuscarMotoristaPorId(int id)
         {
             return Motorista3Async(id, System.Threading.CancellationToken.None);
         }
@@ -731,7 +741,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Motorista> Motorista3Async(int id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<MotoristaViewModel> Motorista3Async(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -768,7 +778,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Motorista>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MotoristaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -784,7 +794,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Motorista);
+                        return default(MotoristaViewModel);
                     }
                     finally
                     {
@@ -873,7 +883,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Motorista> BuscarMotoristaPorCpf(string cpf)
+        public System.Threading.Tasks.Task<MotoristaViewModel> BuscarMotoristaPorCpf(string cpf)
         {
             return BuscarMotoristaPeloCpfAsync(cpf, System.Threading.CancellationToken.None);
         }
@@ -881,7 +891,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Motorista> BuscarMotoristaPeloCpfAsync(string cpf, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<MotoristaViewModel> BuscarMotoristaPeloCpfAsync(string cpf, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Motorista/BuscarMotoristaPeloCpf?");
@@ -919,7 +929,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Motorista>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MotoristaViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -935,7 +945,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Motorista);
+                        return default(MotoristaViewModel);
                     }
                     finally
                     {
@@ -951,7 +961,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> AdicionarVeiculo(VeiculoDto body)
+        public System.Threading.Tasks.Task<VeiculoViewModel> AdicionarVeiculo(VeiculoDto body)
         {
             return VeiculoAsync(body, System.Threading.CancellationToken.None);
         }
@@ -959,7 +969,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Veiculo> VeiculoAsync(VeiculoDto body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<VeiculoViewModel> VeiculoAsync(VeiculoDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Veiculo");
@@ -995,7 +1005,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Veiculo>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<VeiculoViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1011,7 +1021,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Veiculo);
+                        return default(VeiculoViewModel);
                     }
                     finally
                     {
@@ -1027,7 +1037,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Veiculo>> BuscarTodosOsVeiculos()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VeiculoViewModel>> BuscarTodosOsVeiculos()
         {
             return VeiculoAllAsync(System.Threading.CancellationToken.None);
         }
@@ -1035,7 +1045,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Veiculo>> VeiculoAllAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<VeiculoViewModel>> VeiculoAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Veiculo");
@@ -1068,7 +1078,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Veiculo>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<VeiculoViewModel>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1084,7 +1094,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(System.Collections.Generic.ICollection<Veiculo>);
+                        return default(System.Collections.Generic.ICollection<VeiculoViewModel>);
                     }
                     finally
                     {
@@ -1100,18 +1110,23 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> AtualizarVeiculo(Veiculo body)
+        public System.Threading.Tasks.Task<VeiculoViewModel> AtualizarVeiculo(int? id, VeiculoDto body)
         {
-            return Veiculo2Async(body, System.Threading.CancellationToken.None);
+            return Veiculo2Async(id, body, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Veiculo> Veiculo2Async(Veiculo body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<VeiculoViewModel> Veiculo2Async(int? id, VeiculoDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Veiculo");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Veiculo?");
+            if (id != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -1144,7 +1159,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Veiculo>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<VeiculoViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1160,7 +1175,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Veiculo);
+                        return default(VeiculoViewModel);
                     }
                     finally
                     {
@@ -1176,7 +1191,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPorId(int id)
+        public System.Threading.Tasks.Task<VeiculoViewModel> BuscarVeiculoPorId(int id)
         {
             return Veiculo3Async(id, System.Threading.CancellationToken.None);
         }
@@ -1184,7 +1199,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Veiculo> Veiculo3Async(int id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<VeiculoViewModel> Veiculo3Async(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1221,7 +1236,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Veiculo>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<VeiculoViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1237,7 +1252,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Veiculo);
+                        return default(VeiculoViewModel);
                     }
                     finally
                     {
@@ -1326,7 +1341,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPelaPlaca(string placa)
+        public System.Threading.Tasks.Task<VeiculoViewModel> BuscarVeiculoPelaPlaca(string placa)
         {
             return BuscarVeiculoPelaPlacaAsync(placa, System.Threading.CancellationToken.None);
         }
@@ -1334,13 +1349,13 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Veiculo> BuscarVeiculoPelaPlacaAsync(string placa, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<VeiculoViewModel> BuscarVeiculoPelaPlacaAsync(string placa, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Veiculo/BuscarVeiculoPelaPlaca?");
             if (placa != null) 
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("cpf") + "=").Append(System.Uri.EscapeDataString(ConvertToString(placa, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("placa") + "=").Append(System.Uri.EscapeDataString(ConvertToString(placa, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
     
@@ -1372,7 +1387,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Veiculo>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<VeiculoViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1388,7 +1403,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Veiculo);
+                        return default(VeiculoViewModel);
                     }
                     finally
                     {
@@ -1404,7 +1419,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> AdicionaViagem(ViagemDto body)
+        public System.Threading.Tasks.Task<ViagemViewModel> AdicionaViagem(ViagemDto body)
         {
             return ViagemAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1412,7 +1427,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Viagem> ViagemAsync(ViagemDto body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ViagemViewModel> ViagemAsync(ViagemDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem");
@@ -1448,7 +1463,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Viagem>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ViagemViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1464,7 +1479,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Viagem);
+                        return default(ViagemViewModel);
                     }
                     finally
                     {
@@ -1480,7 +1495,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Viagem>> BuscarTodosAsViagens()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ViagemViewModel>> BuscarTodosAsViagens()
         {
             return ViagemAllAsync(System.Threading.CancellationToken.None);
         }
@@ -1488,7 +1503,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Viagem>> ViagemAllAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ViagemViewModel>> ViagemAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem");
@@ -1521,7 +1536,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Viagem>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ViagemViewModel>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1537,7 +1552,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(System.Collections.Generic.ICollection<Viagem>);
+                        return default(System.Collections.Generic.ICollection<ViagemViewModel>);
                     }
                     finally
                     {
@@ -1553,18 +1568,23 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> AtualizarViagem(Viagem body)
+        public System.Threading.Tasks.Task<ViagemViewModel> AtualizarViagem(int? id, ViagemDto body)
         {
-            return Viagem2Async(body, System.Threading.CancellationToken.None);
+            return Viagem2Async(id, body, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Viagem> Viagem2Async(Viagem body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ViagemViewModel> Viagem2Async(int? id, ViagemDto body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem?");
+            if (id != null) 
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -1597,7 +1617,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Viagem>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ViagemViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1613,7 +1633,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Viagem);
+                        return default(ViagemViewModel);
                     }
                     finally
                     {
@@ -1629,7 +1649,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Viagem> BuscarViagemPorId(int id)
+        public System.Threading.Tasks.Task<ViagemViewModel> BuscarViagemPorId(int id)
         {
             return Viagem3Async(id, System.Threading.CancellationToken.None);
         }
@@ -1637,7 +1657,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Viagem> Viagem3Async(int id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ViagemViewModel> Viagem3Async(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1674,7 +1694,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Viagem>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ViagemViewModel>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1690,7 +1710,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(Viagem);
+                        return default(ViagemViewModel);
                     }
                     finally
                     {
@@ -1779,7 +1799,7 @@ namespace ViagemApi.Client
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<IEnumerable<Viagem>> BuscarViagemPelaData(System.DateTimeOffset? dataParaBusca)
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ViagemViewModel>> BuscarViagemPelaData(System.DateTimeOffset? dataParaBusca)
         {
             return BuscarViagemPorDataAsync(dataParaBusca, System.Threading.CancellationToken.None);
         }
@@ -1787,7 +1807,7 @@ namespace ViagemApi.Client
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<IEnumerable<Viagem>> BuscarViagemPorDataAsync(System.DateTimeOffset? dataParaBusca, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ViagemViewModel>> BuscarViagemPorDataAsync(System.DateTimeOffset? dataParaBusca, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Viagem/BuscarViagemPorData?");
@@ -1825,7 +1845,7 @@ namespace ViagemApi.Client
                         var status_ = ((int)response_.StatusCode).ToString();
                         if (status_ == "200") 
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IEnumerable<Viagem>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<ViagemViewModel>>(response_, headers_).ConfigureAwait(false);
                             return objectResponse_.Object;
                         }
                         else
@@ -1841,7 +1861,7 @@ namespace ViagemApi.Client
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(IEnumerable<Viagem>);
+                        return default(System.Collections.Generic.ICollection<ViagemViewModel>);
                     }
                     finally
                     {
@@ -1988,6 +2008,27 @@ namespace ViagemApi.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class LinhaViewModel 
+    {
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("nome", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Nome { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("numero", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Numero { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("origem", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Origem { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("destino", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Destino { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class Motorista 
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -2005,6 +2046,21 @@ namespace ViagemApi.Client
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class MotoristaDto 
     {
+        [Newtonsoft.Json.JsonProperty("nome", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Nome { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("cpf", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Cpf { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class MotoristaViewModel 
+    {
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Id { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("nome", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Nome { get; set; }
     
@@ -2045,18 +2101,6 @@ namespace ViagemApi.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class Veiculo 
-    {
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Id { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("placa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Placa { get; set; }
-    
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class VeiculoDto 
     {
         [Newtonsoft.Json.JsonProperty("placa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -2066,11 +2110,20 @@ namespace ViagemApi.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class Viagem 
+    public partial class VeiculoViewModel 
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Id { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("placa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Placa { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ViagemDto 
+    {
         [Newtonsoft.Json.JsonProperty("numeroServico", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string NumeroServico { get; set; }
     
@@ -2090,16 +2143,19 @@ namespace ViagemApi.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.22.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class ViagemDto 
+    public partial class ViagemViewModel 
     {
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Id { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("numeroServico", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string NumeroServico { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("idLinha", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int IdLinha { get; set; }
+        [Newtonsoft.Json.JsonProperty("linha", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Linha Linha { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("idMotorista", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int IdMotorista { get; set; }
+        [Newtonsoft.Json.JsonProperty("motorista", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Motorista Motorista { get; set; }
     
         [Newtonsoft.Json.JsonProperty("dataPartida", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTimeOffset DataPartida { get; set; }

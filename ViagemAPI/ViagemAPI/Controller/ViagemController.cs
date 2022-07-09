@@ -2,7 +2,7 @@
 using ViagemAPI.Data.Dto;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
-using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Controller
 {
@@ -19,7 +19,7 @@ namespace ViagemAPI.Controller
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Viagem> AdicionarViagem(ViagemDto dto)
+        public ActionResult<ViagemViewModel> AdicionarViagem(ViagemDto dto)
         {
 
             var viagemAdicionada = Repository.CriarNovaViagem(dto);
@@ -32,7 +32,7 @@ namespace ViagemAPI.Controller
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Viagem>> BuscarTodasAsViagem()
+        public ActionResult<IEnumerable<ViagemViewModel>> BuscarTodasAsViagem()
         {
 
             var viagensExistentes = Repository.BuscarTodasAsViagens();
@@ -44,7 +44,7 @@ namespace ViagemAPI.Controller
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Viagem> BuscarViagemPorId(int id)
+        public ActionResult<ViagemViewModel> BuscarViagemPorId(int id)
         {
             var viagem = Repository.BuscarViagemPorId(id);
             if (viagem != null) return Ok(viagem);
@@ -55,7 +55,7 @@ namespace ViagemAPI.Controller
         [Route("BuscarViagemPorData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Viagem>> BuscarViagemPorData(DateTime dataParaBusca)
+        public ActionResult<IEnumerable<ViagemViewModel>> BuscarViagemPorData(DateTime dataParaBusca)
         {
             var viagem = Repository.BuscarViagemPorData(dataParaBusca);
             if (viagem != null) return Ok(viagem);
@@ -65,9 +65,9 @@ namespace ViagemAPI.Controller
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Viagem> AtualizarViagem(Viagem linha)
+        public ActionResult<ViagemViewModel> AtualizarViagem(int id, ViagemDto viagemParaAtualizar)
         {
-            var viagemAtualizada = Repository.AtualizarViagem(linha);
+            var viagemAtualizada = Repository.AtualizarViagem(id, viagemParaAtualizar);
             if (viagemAtualizada != null) return Ok(viagemAtualizada);
             return NotFound();
         }

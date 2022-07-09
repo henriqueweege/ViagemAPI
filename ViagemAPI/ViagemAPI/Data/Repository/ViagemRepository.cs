@@ -3,6 +3,8 @@ using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 using ViagemAPI.Services;
 using ViagemAPI.Services.ServicesContracts;
+using ViagemAPI.ViewModel;
+
 
 namespace ViagemAPI.Data.Repository
 {
@@ -16,14 +18,57 @@ namespace ViagemAPI.Data.Repository
             Services = services;
         }
 
-        public Viagem CriarNovaViagem(ViagemDto viagemParaCriar)
+        public ViagemViewModel CriarNovaViagem(ViagemDto viagemParaCriar)
         {
             try
             {
-                var linhaMapeada = Services.TransformaDtoEmObjeto(viagemParaCriar);
-                Context.Add(linhaMapeada);
-                if (Context.SaveChanges() > 0) return Context.Viagem.OrderBy(v => v.Id).LastOrDefault(v => v.NumeroServico == viagemParaCriar.NumeroServico &&
-                                                                                v.DataPartida == viagemParaCriar.DataPartida);
+                var numeroViagemCheck = MesmoNumeroCheck(viagemParaCriar.NumeroServico, viagemParaCriar.DataPartida);
+                var viagem = Services.TransformaDtoEmViagem(viagemParaCriar);
+                var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
+                var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
+                if (linhaDaViagem != null)
+                {
+                    Context.Add(viagem);
+                    if(Context.SaveChanges() > 0)
+                    {
+                        ViagemViewModel viagemConvertida;
+                        viagemConvertida = Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem);
+                        return viagemConvertida;
+
+                    }
+                    else
+                    {
+                        throw new Exception("Erro na requisição.");
+                    }
+
+                }
+                else
+                {
+                    throw new Exception("Linha inválida.");
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public IEnumerable<ViagemViewModel> BuscarTodasAsViagens()
+        {
+            try
+            {
+                var viagensExistentes = Context.Viagem.ToList();
+                var viagensRetorno = new List<ViagemViewModel>();
+                foreach (var viagem in viagensExistentes)
+                {
+                    var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
+                    var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
+                    if (linhaDaViagem != null)
+                        viagensRetorno.Add(Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem));
+                    else throw new Exception("Linha ou Motorista invalidos.");
+                }
+                
+                if (viagensRetorno != null) return viagensRetorno;
                 return null;
             }
             catch (Exception exception)
@@ -32,13 +77,29 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public IEnumerable<Viagem> BuscarTodasAsViagens()
+        public ViagemViewModel BuscarViagemPorId(int id)
         {
             try
             {
-                IEnumerable<Viagem> viagensExistentes = Context.Viagem;
-                if (viagensExistentes != null) return viagensExistentes;
-                return null;
+                ViagemViewModel viagemConvertida;
+                var viagemPesquisada = Context.Viagem.FirstOrDefault(l => l.Id == id);
+                if(viagemPesquisada != null)
+                {
+                    var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagemPesquisada.IdMotorista);
+                    var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagemPesquisada.IdLinha);
+                    if(linhaDaViagem != null) 
+                        viagemConvertida = Services.TransformaViagemEmViewModel(viagemPesquisada, linhaDaViagem, motoristaDaViagem);
+                    else
+                    {
+                        throw new Exception("Motorista ou linha inválidos.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Viagem não encontrada");
+                }
+
+                return viagemConvertida;
             }
             catch (Exception exception)
             {
@@ -46,24 +107,22 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Viagem BuscarViagemPorId(int id)
+        public IEnumerable<ViagemViewModel> BuscarViagemPorData(DateTime dataDaViagem)
         {
             try
             {
-                return Context.Viagem.FirstOrDefault(l => l.Id == id);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-        }
-
-        public IEnumerable<Viagem> BuscarViagemPorData(DateTime dataDaViagem)
-        {
-            try
-            {
+                
                 IEnumerable<Viagem> viagens = Context.Viagem.Where(v => v.DataPartida == dataDaViagem);
-                if (viagens != null) return viagens;
+                IList<ViagemViewModel> viagensRetorno = new List<ViagemViewModel>();
+                foreach (var viagem in viagens)
+                {
+                    var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
+                    var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
+                    if (motoristaDaViagem != null && linhaDaViagem != null)
+                        viagensRetorno.Add(Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem));
+                    else throw new Exception("Linha ou Motorista invalidos.");
+                }
+                if (viagens != null) return viagensRetorno;
                 return null;
             }
             catch (Exception exception)
@@ -72,19 +131,48 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Viagem AtualizarViagem(Viagem viagemParaAtualizar)
+        public ViagemViewModel AtualizarViagem(int id, ViagemDto viagemParaAtualizar)
         {
             try
             {
+                var viagemAtualizada = Services.TransformaDtoEmViagem(viagemParaAtualizar);
+                viagemAtualizada.Id = id;
+                Context.Viagem.Update(viagemAtualizada);
+                if (Context.SaveChanges() > 0)
+                {
+                    ViagemViewModel viagemConvertida;
+                    var viagemPesquisada = Context.Viagem.FirstOrDefault(l => l.Id == id);
+                    if (viagemPesquisada != null)
+                    {
+                        var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagemPesquisada.IdMotorista);
+                        var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagemPesquisada.IdLinha);
+                        if (motoristaDaViagem != null && linhaDaViagem != null)
+                            viagemConvertida = Services.TransformaViagemEmViewModel(viagemPesquisada, linhaDaViagem, motoristaDaViagem);
+                            
+                        else
+                        {
+                            throw new Exception("Motorista ou linha inválidos.");
+                        }
+                        return viagemConvertida;
+                    }
+                    else
+                    {
+                        throw new Exception("Viagem não encontrada");
+                    }
 
-                Context.Viagem.Update(viagemParaAtualizar);
-                if (Context.SaveChanges() > 0) return viagemParaAtualizar;
-                return null;
-            }
+                }
+                else
+                {
+                    throw new Exception("Erro na atualização.");
+                }
+
+
+            }        
             catch (Exception exception)
             {
                 throw exception;
             }
+           
         }
 
         public bool DeletarViagemPorId(int id)
@@ -105,6 +193,16 @@ namespace ViagemAPI.Data.Repository
             {
                 throw exception;
             }
+        }
+
+        public bool MesmoNumeroCheck(string numeroParaCheckar, DateTime dataPartida)
+        {
+            IEnumerable<Viagem> viagensComEsseNumero = Context.Viagem.Where(v => v.NumeroServico == numeroParaCheckar);
+            foreach(var viagem in viagensComEsseNumero)
+            {
+                if (viagem.DataPartida == dataPartida) throw new Exception("Números de serviço devem ser únicos no dia.");
+            }
+            return false;
         }
     }
 }

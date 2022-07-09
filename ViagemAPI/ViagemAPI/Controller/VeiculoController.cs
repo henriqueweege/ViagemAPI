@@ -2,7 +2,7 @@
 using ViagemAPI.Data.Dto;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
-using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Controller
 {
@@ -19,7 +19,7 @@ namespace ViagemAPI.Controller
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Veiculo> AdicionarVeiculo(VeiculoDto dto)
+        public ActionResult<VeiculoViewModel> AdicionarVeiculo(VeiculoDto dto)
         {
 
             var veiculoAdicionado = Repository.CriarNovoVeiculo(dto);
@@ -32,7 +32,7 @@ namespace ViagemAPI.Controller
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Veiculo>> BuscarTodasOsVeiculo()
+        public ActionResult<IEnumerable<VeiculoViewModel>> BuscarTodasOsVeiculo()
         {
 
             var veiculosExistentes = Repository.BuscarTodosOsVeiculos();
@@ -44,7 +44,7 @@ namespace ViagemAPI.Controller
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Veiculo> BuscarVeiculoPorId(int id)
+        public ActionResult<VeiculoViewModel> BuscarVeiculoPorId(int id)
         {
             var veiculo = Repository.BuscarVeiculoPorId(id);
             if (veiculo != null) return Ok(veiculo);
@@ -55,7 +55,7 @@ namespace ViagemAPI.Controller
         [Route("BuscarVeiculoPelaPlaca")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Veiculo> BuscarVeiculoPelaPlaca(string placa)
+        public ActionResult<VeiculoViewModel> BuscarVeiculoPelaPlaca(string placa)
         {
             var veiculo = Repository.BuscarVeiculoPelaPlaca(placa);
             if (veiculo != null) return Ok(veiculo);
@@ -65,9 +65,9 @@ namespace ViagemAPI.Controller
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Veiculo> AtualizarVeiculo(Veiculo Veiculo)
+        public ActionResult<VeiculoViewModel> AtualizarVeiculo(int id, VeiculoDto Veiculo)
         {
-            var veiculoAtualizado = Repository.AtualizarVeiculo(Veiculo);
+            var veiculoAtualizado = Repository.AtualizarVeiculo(id, Veiculo);
             if (veiculoAtualizado != null) return Ok(veiculoAtualizado);
             return NotFound();
         }

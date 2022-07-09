@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ViagemAPI.Data.Dto;
 using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Data.Profiles
 {
@@ -9,7 +10,7 @@ namespace ViagemAPI.Data.Profiles
         public VeiculoProfile()
         {
             CreateMap<VeiculoDto, Veiculo>();
-            CreateMap<Veiculo, VeiculoDto>();
+            CreateMap<Veiculo, VeiculoViewModel>();
         }
     }
 }

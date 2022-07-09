@@ -2,6 +2,7 @@
 using ViagemAPI.Data.Dto;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
+using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Services
 {
@@ -13,20 +14,54 @@ namespace ViagemAPI.Services
         {
             Mapper = mapper;
         }
-        public Veiculo TransformaDtoEmObjeto(VeiculoDto veiculoParaMapear)
+        public Veiculo TransformaDtoEmVeiculo(VeiculoDto veiculoParaMapear)
         {
-            Veiculo motoristaMapeado;
+            Veiculo veiculoMapeado;
             try
             {
-                motoristaMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
+                veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
+                if (veiculoMapeado != null) return veiculoMapeado;
+                throw new Exception("Erro no mapeamento");
             }
             catch (Exception exception)
             {
                 throw exception;
             }
-            if (motoristaMapeado != null) return motoristaMapeado;
+           
+        }
 
-            throw new Exception("Erro no mapeamento");
+        public VeiculoViewModel TransformaVeiculoEmViewModel(Veiculo veiculoParaMapear)
+        {
+            VeiculoViewModel veiculoMapeado;
+            try
+            {
+                veiculoMapeado = Mapper.Map<VeiculoViewModel>(veiculoParaMapear);
+                if (veiculoMapeado != null) return veiculoMapeado;
+                throw new Exception("Erro no mapeamento");
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            
+        }
+
+        public IEnumerable<VeiculoViewModel> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter)
+        {
+            try
+            {
+                var veiculosRetorno = new List<VeiculoViewModel>();
+                foreach (var veiculo in listaParaConverter)
+                {
+                    veiculosRetorno.Add(TransformaVeiculoEmViewModel(veiculo));
+                }
+                if (veiculosRetorno != null) return veiculosRetorno;
+                throw new Exception("Erro na conversão");
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
     }
 }

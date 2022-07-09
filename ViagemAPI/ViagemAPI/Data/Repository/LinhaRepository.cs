@@ -2,6 +2,8 @@
 using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 using ViagemAPI.Services;
+using ViagemAPI.ViewModel;
+
 
 
 namespace ViagemAPI.Data.Repository
@@ -16,16 +18,16 @@ namespace ViagemAPI.Data.Repository
             Services = linhaServices;
         }
         
-        public Linha CriarNovaLinha(LinhaDto linhaDto)
+        public LinhaViewModel CriarNovaLinha(LinhaDto linhaDto)
         {
             try
             {
-                var linhaMapeada = Services.TransformaDtoEmObjeto(linhaDto);
+                var linhaMapeada = Services.TransformaDtoEmLinha(linhaDto);
                 Context.Add(linhaMapeada);
-                if (Context.SaveChanges() > 0) return Context.Linha.OrderBy(l => l.Id).LastOrDefault(l => l.Numero == linhaDto.Numero && 
+                if (Context.SaveChanges() > 0) return Services.TransformaLinhaEmViewModel( Context.Linha.OrderBy(l => l.Id).LastOrDefault(l => l.Numero == linhaDto.Numero && 
                                                                                 l.Nome == linhaDto.Nome &&
                                                                                 l.Origem == linhaDto.Origem &&
-                                                                                l.Destino == linhaDto.Destino);
+                                                                                l.Destino == linhaDto.Destino));
                 return null;
             }
             catch(Exception exception)
@@ -34,11 +36,11 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Linha BuscarLinhaPorId(int id)
+        public LinhaViewModel BuscarLinhaPorId(int id)
         {
             try
             {
-                return Context.Linha.FirstOrDefault(l => l.Id == id);
+                return Services.TransformaLinhaEmViewModel(Context.Linha.FirstOrDefault(l => l.Id == id));
             }
             catch(Exception exception)
             {
@@ -46,12 +48,17 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public IEnumerable<Linha> BuscarTodasAsLinhas()
+        public IEnumerable<LinhaViewModel> BuscarTodasAsLinhas()
         {
             try
             {
-                IEnumerable<Linha> linhasExistentes = Context.Linha;
-                if (linhasExistentes != null) return linhasExistentes;
+                IEnumerable<Linha> linhasExistentes = Context.Linha.ToList();
+                if (linhasExistentes != null)
+                {
+                    var linhasConvertidas = Services.TransformaLinhasEmViewModelList(linhasExistentes);
+                    if (linhasConvertidas != null) return linhasConvertidas.ToList();
+                    throw new Exception("Erro na conversão.");
+                }
                 return null;
             }
             catch(Exception exception)
@@ -59,12 +66,12 @@ namespace ViagemAPI.Data.Repository
                 throw exception;
             }
         }
-        public Linha BuscarLinhaPeloNumero(int numero)
+        public LinhaViewModel BuscarLinhaPeloNumero(int numero)
         {
             try
             {
                 var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
-                if (linha != null) return linha;
+                if (linha != null) return Services.TransformaLinhaEmViewModel(linha);
                 return null;
             }
             catch(Exception exception)
@@ -73,13 +80,14 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Linha AtualizarLinha(Linha linhaParaAtualizar)
+        public LinhaViewModel AtualizarLinha(int id, LinhaDto linhaParaAtualizar)
         {
             try
             {
-
-                Context.Linha.Update(linhaParaAtualizar);
-                if (Context.SaveChanges() > 0) return linhaParaAtualizar;
+                var linhaConvertida = Services.TransformaDtoEmLinha(linhaParaAtualizar);
+                linhaConvertida.Id = id;
+                Context.Linha.Update(linhaConvertida);
+                if (Context.SaveChanges() > 0) return Services.TransformaLinhaEmViewModel(linhaConvertida);
                 return null;
             }
             catch(Exception exception)

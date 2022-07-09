@@ -1,15 +1,18 @@
 ﻿using ViagemAPI.Data.Dto;
-using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
+
 
 namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface IViagemRepository
     {
-        Viagem CriarNovaViagem(ViagemDto viagemParaCriar);
-        IEnumerable<Viagem> BuscarTodasAsViagens();
-        Viagem BuscarViagemPorId(int id);
-        IEnumerable<Viagem> BuscarViagemPorData(DateTime dataDaViagem);
-        Viagem AtualizarViagem(Viagem viagemParaAtualizar);
+        ViagemViewModel CriarNovaViagem(ViagemDto viagemParaCriar);
+        IEnumerable<ViagemViewModel> BuscarTodasAsViagens();
+        ViagemViewModel BuscarViagemPorId(int id);
+        IEnumerable<ViagemViewModel> BuscarViagemPorData(DateTime dataDaViagem);
+        ViagemViewModel AtualizarViagem(int id, ViagemDto viagemParaAtualizar);
         bool DeletarViagemPorId(int id);
+        public bool MesmoNumeroCheck(string numeroParaCheckar, DateTime dataPartida);
+
     }
 }

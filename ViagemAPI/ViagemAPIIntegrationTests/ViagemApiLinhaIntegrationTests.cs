@@ -33,7 +33,7 @@ namespace ViagemAPIIntegrationTests
             //arrange
 
             //act
-            IEnumerable<Linha> linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
+            IEnumerable<LinhaViewModel> linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
             
             //assert
             Assert.True(linhas.Count() > 1);
@@ -109,16 +109,15 @@ namespace ViagemAPIIntegrationTests
         public async Task AtualizarLinhaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var linhaParaAtualizar = new Linha()
+            var linhaParaAtualizar = new LinhaDto()
             {
-                Id = 1,
                 Nome = "LinhaAtualizada",
                 Numero = 8,
                 Origem = "Qualquer",
                 Destino = "Qualquer 2"
             };
             //act
-            var linhaAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarLinha(linhaParaAtualizar);
+            var linhaAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarLinha(1, linhaParaAtualizar);
             //assert
             Assert.Equal(linhaParaAtualizar.Nome, linhaAtualizada.Nome);
         }

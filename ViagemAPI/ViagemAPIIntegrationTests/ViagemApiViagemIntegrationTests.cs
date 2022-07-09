@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViagemAPI.Model;
 
 namespace ViagemApiIntegrationTests
 {
@@ -16,11 +17,12 @@ namespace ViagemApiIntegrationTests
         [Fact]
         public async Task AdicionaViagemDeveriaRetornarObjetoValido()
         {
+            Random randNum = new Random();
             //arrange
             var viagemDto = new ViagemDto()
             {
-                NumeroServico = "1234",
-                IdLinha = 11,
+                NumeroServico = $"{randNum.Next()}",
+                IdLinha = 1,
                 IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
@@ -39,7 +41,7 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             //act
-            IEnumerable<Viagem> veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodosAsViagens();
+            IEnumerable<ViagemViewModel> veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodosAsViagens();
 
             //assert
             Assert.True(veiculos.Count() >= 1);
@@ -53,7 +55,7 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new ViagemDto()
             {
                 NumeroServico = "1234",
-                IdLinha = 11,
+                IdLinha = 1,
                 IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
@@ -73,7 +75,7 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new ViagemDto()
             {
                 NumeroServico = "1234",
-                IdLinha = 11,
+                IdLinha = 1,
                 IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
@@ -106,17 +108,16 @@ namespace ViagemApiIntegrationTests
         {
             Random randNum = new Random();
 
-                var viagemParaAtualizar = new Viagem()
+            var viagemParaAtualizar = new ViagemDto()
             {
-                Id =1,
                 NumeroServico = $"{randNum.Next()}",
-                IdLinha = 11,
+                IdLinha = 1,
                 IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
             //act
-            var viagemAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarViagem(viagemParaAtualizar);
+            var viagemAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarViagem(1 ,viagemParaAtualizar);
             //assert
             Assert.Equal(viagemParaAtualizar.NumeroServico, viagemAtualizada.NumeroServico);
         }

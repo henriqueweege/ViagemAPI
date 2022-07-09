@@ -2,7 +2,7 @@
 using ViagemAPI.Data.Dto;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
-using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Controller
 {
@@ -19,7 +19,7 @@ namespace ViagemAPI.Controller
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Linha> AdicionarLinha(LinhaDto dto) 
+        public ActionResult<LinhaViewModel> AdicionarLinha(LinhaDto dto) 
         {
 
              var linhaAdicionada = Repository.CriarNovaLinha(dto);
@@ -32,7 +32,7 @@ namespace ViagemAPI.Controller
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Linha>> BuscarTodasAsLinha()
+        public ActionResult<IEnumerable<LinhaViewModel>> BuscarTodasAsLinha()
         {
    
             var linhasExistentes = Repository.BuscarTodasAsLinhas();
@@ -44,7 +44,7 @@ namespace ViagemAPI.Controller
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Linha> BuscarLinhaPorId(int id)
+        public ActionResult<LinhaViewModel> BuscarLinhaPorId(int id)
         {
             var linha = Repository.BuscarLinhaPorId(id);
             if (linha != null) return Ok(linha);
@@ -55,7 +55,7 @@ namespace ViagemAPI.Controller
         [Route("BuscarLinhaPorNumero/{numero}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Linha> BuscarLinhaPorNumero(int numero)
+        public ActionResult<LinhaViewModel> BuscarLinhaPorNumero(int numero)
         {
             var linha = Repository.BuscarLinhaPeloNumero(numero);
             if (linha != null) return Ok(linha);
@@ -65,20 +65,20 @@ namespace ViagemAPI.Controller
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Linha> AtualizarLinha(Linha linha)
+        public ActionResult<LinhaViewModel> AtualizarLinha(int id, LinhaDto linha)
         {
-            var linhaAtualizada = Repository.AtualizarLinha(linha);
+            var linhaAtualizada = Repository.AtualizarLinha(id, linha);
             if (linhaAtualizada != null) return Ok(linhaAtualizada);
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeletarLinha(int id)
         {
             var deletaLinha = Repository.DeletarLinhaPorId(id);
-            if (deletaLinha != false) return Ok();
+            if (deletaLinha != false) return NoContent();
             return NotFound();
         }
 

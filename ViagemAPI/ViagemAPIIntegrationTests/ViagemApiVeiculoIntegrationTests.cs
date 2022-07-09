@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViagemAPI.Model;
 
 namespace ViagemApiIntegrationTests
 {
@@ -20,7 +21,7 @@ namespace ViagemApiIntegrationTests
             var veiculoDto = new VeiculoDto()
             {
                 
-                Placa = "AAA-1111"
+                Placa = "AWE-1111"
             };
 
             //act
@@ -36,28 +37,21 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             //act
-            IEnumerable<Veiculo> veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsVeiculos();
+           var veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsVeiculos();
 
             //assert
-            Assert.True(veiculos.Count() > 1);
+            Assert.True(veiculos.Count() >= 1);
 
         }
 
         [Fact]
         public async Task BuscarVeiculoPorIdDeveriaRetornarObjetoValido()
         {
-            //arrange
-            var veiculoDto = new VeiculoDto()
-            {
-
-                Placa = "AAA-1111"
-            };
-            var veiculoAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarVeiculo(veiculoDto);
-
+            //arrang
             //act
-            var veiculo = await ViagemApiFixture.ViagemApiClient.BuscarVeiculoPorId(veiculoAdicionado.Id);
+            var veiculo = await ViagemApiFixture.ViagemApiClient.BuscarVeiculoPorId(1);
             //assert
-            Assert.Equal(veiculoDto.Placa, veiculo.Placa);
+            Assert.True(veiculo.Placa != null);
         }
 
 
@@ -85,33 +79,27 @@ namespace ViagemApiIntegrationTests
         public async Task BuscarVeiculoPelaPlacaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var veiculoDto = new VeiculoDto()
-            {
 
-                Placa = "DDD-1111"
-            };
-
-            var veiculoAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarVeiculo(veiculoDto);
+            var veiculo = await ViagemApiFixture.ViagemApiClient.BuscarVeiculoPorId(1);
 
             //act
-            var veiculoPesquisado = await ViagemApiFixture.ViagemApiClient.BuscarVeiculoPelaPlaca(veiculoDto.Placa);
+            var veiculoPesquisado = await ViagemApiFixture.ViagemApiClient.BuscarVeiculoPelaPlaca(veiculo.Placa);
 
             //assert
-            Assert.Equal(veiculoPesquisado.Id, veiculoAdicionado.Id);
+            Assert.Equal(veiculoPesquisado.Id, veiculo.Id);
         }
 
         [Fact]
         public async Task AtualizarVeiculoDeveriaRetornarObjetoValido()
         {
             //arrange
-            var veiculoParaAtualizar = new Veiculo()
+            var veiculoParaAtualizar = new VeiculoDto()
             {
-                Id=1,
                 Placa = "DDD-1111"
             };
 
             //act
-            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarVeiculo(veiculoParaAtualizar);
+            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarVeiculo(1, veiculoParaAtualizar);
             //assert
             Assert.Equal(veiculoParaAtualizar.Placa, motoristaAtualizado.Placa);
         }

@@ -3,6 +3,8 @@ using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 using ViagemAPI.Services;
 using ViagemAPI.Services.ServicesContracts;
+using ViagemAPI.ViewModel;
+
 
 namespace ViagemAPI.Data.Repository
 {
@@ -16,13 +18,16 @@ namespace ViagemAPI.Data.Repository
             Services = services;
         }
 
-        public Veiculo CriarNovoVeiculo(VeiculoDto veiculoParaCriar)
+        public VeiculoViewModel CriarNovoVeiculo(VeiculoDto veiculoParaCriar)
         {
             try
             {
-                var veiculoMapeado = Services.TransformaDtoEmObjeto(veiculoParaCriar);
+                var placaCheckada = MesmaPlacaCheck(veiculoParaCriar.Placa);
+                if (placaCheckada == true) throw new Exception("Placa já cadastrado");
+                var veiculoMapeado = Services.TransformaDtoEmVeiculo(veiculoParaCriar);
                 Context.Add(veiculoMapeado);
-                if (Context.SaveChanges() > 0) return Context.Veiculo.OrderBy(v => v.Id).LastOrDefault(v => v.Placa == veiculoParaCriar.Placa);
+                if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(Context.Veiculo.OrderBy(v => v.Id)
+                                                                                            .LastOrDefault(v => v.Placa == veiculoParaCriar.Placa));
                 return null;
             }
             catch (Exception exception)
@@ -31,12 +36,12 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public IEnumerable<Veiculo> BuscarTodosOsVeiculos()
+        public IEnumerable<VeiculoViewModel> BuscarTodosOsVeiculos()
         {
             try
             {
-                IEnumerable<Veiculo> veiculosExistentes = Context.Veiculo;
-                if (veiculosExistentes != null) return veiculosExistentes;
+                var veiculosExistentes = Context.Veiculo;
+                if (veiculosExistentes != null) return Services.TransformaVeiculosEmViewModelList(veiculosExistentes);
                 return null;
             }
             catch (Exception exception)
@@ -45,11 +50,11 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Veiculo BuscarVeiculoPorId(int id)
+        public VeiculoViewModel BuscarVeiculoPorId(int id)
         {
             try
             {
-                return Context.Veiculo.FirstOrDefault(v => v.Id == id);
+                return Services.TransformaVeiculoEmViewModel(Context.Veiculo.FirstOrDefault(v => v.Id == id));
             }
             catch (Exception exception)
             {
@@ -57,12 +62,12 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Veiculo BuscarVeiculoPelaPlaca(string placa)
+        public VeiculoViewModel BuscarVeiculoPelaPlaca(string placa)
         {
             try
             {
                 var veiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
-                if (veiculo != null) return veiculo;
+                if (veiculo != null) return Services.TransformaVeiculoEmViewModel(veiculo);
                 return null;
             }
             catch (Exception exception)
@@ -71,13 +76,15 @@ namespace ViagemAPI.Data.Repository
             }
         }
 
-        public Veiculo AtualizarVeiculo(Veiculo veiculoParaAtualizar)
+        public VeiculoViewModel AtualizarVeiculo(int id, VeiculoDto veiculoParaAtualizar)
         {
             try
             {
 
-                Context.Veiculo.Update(veiculoParaAtualizar);
-                if (Context.SaveChanges() > 0) return veiculoParaAtualizar;
+                var veiculoConvertido = Services.TransformaDtoEmVeiculo(veiculoParaAtualizar);
+                veiculoConvertido.Id = id;
+                Context.Veiculo.Update(veiculoConvertido);
+                if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(veiculoConvertido);
                 return null;
             }
             catch (Exception exception)
@@ -99,6 +106,20 @@ namespace ViagemAPI.Data.Repository
                 if (Context.SaveChanges() > 0) return true;
                 return false;
 
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        private bool MesmaPlacaCheck(string placa)
+        {
+            try
+            {
+                var existeVeiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
+                if (existeVeiculo == null) return false;
+                return true;
             }
             catch (Exception exception)
             {

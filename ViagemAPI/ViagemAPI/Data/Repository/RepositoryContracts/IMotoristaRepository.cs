@@ -1,15 +1,17 @@
 ﻿using ViagemAPI.Data.Dto;
-using ViagemAPI.Model;
+using ViagemAPI.ViewModel;
+
 
 namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface IMotoristaRepository
     {
-        Motorista CriarNovoMotorista(MotoristaDto motoristaParaCriar);
-        IEnumerable<Motorista> BuscarTodosOsMotoristas();
-        Motorista BuscarMotoristaPorId(int id);
-        Motorista BuscarMotoristaPeloCpf(string cpf);
+        MotoristaViewModel CriarNovoMotorista(MotoristaDto motoristaParaCriar);
+        IEnumerable<MotoristaViewModel> BuscarTodosOsMotoristas();
+        MotoristaViewModel BuscarMotoristaPorId(int id);
+        MotoristaViewModel BuscarMotoristaPeloCpf(string cpf);
+        MotoristaViewModel AtualizarMotorista(int id, MotoristaDto motoristaParaAtualizar);
         bool DeletarMotoristaPorId(int id);
-        Motorista AtualizarMotorista(Motorista motoristaParaAtualizar);
+        public bool MesmoCpfCheck(string placa);
     }
 }

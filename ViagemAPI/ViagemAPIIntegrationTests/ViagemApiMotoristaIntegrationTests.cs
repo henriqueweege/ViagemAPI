@@ -17,11 +17,12 @@ namespace ViagemApiIntegrationTests
         [Fact]
         public async Task AdicionarMotoristaDeveriaRetornarObjetoValido()
         {
+            Random randNum = new Random();
             //arrange
             var motoristaDto = new MotoristaDto()
             {
                 Nome = "MotoristaTeste",
-                Cpf= "000.000.000-00"
+                Cpf= $"0{randNum.Next()}0{randNum.Next()}00{randNum.Next()}{randNum.Next()}000"
             };
 
             //act
@@ -37,7 +38,7 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             //act
-            IEnumerable<Motorista> motoristas = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsMotoristas();
+            IEnumerable<MotoristaViewModel> motoristas = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsMotoristas();
 
             //assert
             Assert.True(motoristas.Count() > 1);
@@ -51,7 +52,7 @@ namespace ViagemApiIntegrationTests
             var motoristaDto = new MotoristaDto()
             {
                 Nome = "MotoristaTeste",
-                Cpf = "000.000.000-00"
+                Cpf = "00000000000"
             };
             var motoristaAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarMotorista(motoristaDto);
             //act
@@ -68,7 +69,7 @@ namespace ViagemApiIntegrationTests
             var motoristaDto = new MotoristaDto()
             {
                 Nome = "MotoristaTeste",
-                Cpf = "000.000.000-00"
+                Cpf = "00000000000"
             };
 
             //act
@@ -98,14 +99,13 @@ namespace ViagemApiIntegrationTests
         public async Task AtualizarMotoristaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var motoristaParaAtualizar = new Motorista()
+            var motoristaParaAtualizar = new MotoristaDto()
             {
-                Id = 1,
                 Nome = "MotoristaAtualizada",
-                Cpf = "888.888.888-88"
+                Cpf = "88888888888"
             };
             //act
-            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarMotorista(motoristaParaAtualizar);
+            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarMotorista(1, motoristaParaAtualizar);
             //assert
             Assert.Equal(motoristaParaAtualizar.Cpf, motoristaAtualizado.Cpf);
         }
