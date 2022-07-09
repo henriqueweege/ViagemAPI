@@ -9,7 +9,5 @@ namespace ViagemAPI.Services.ServicesContracts
         public Viagem TransformaDtoEmViagem(ViagemDto viagemParaMapear);
         public ViagemViewModel TransformaViagemEmViewModel(Viagem linhaParaMapear, Linha linha, Motorista motorista);
 
-
-
     }
 }

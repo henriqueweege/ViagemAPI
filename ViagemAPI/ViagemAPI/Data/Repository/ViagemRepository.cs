@@ -58,16 +58,8 @@ namespace ViagemAPI.Data.Repository
             try
             {
                 var viagensExistentes = Context.Viagem.ToList();
-                var viagensRetorno = new List<ViagemViewModel>();
-                foreach (var viagem in viagensExistentes)
-                {
-                    var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
-                    var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
-                    if (linhaDaViagem != null)
-                        viagensRetorno.Add(Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem));
-                    else throw new Exception("Linha ou Motorista invalidos.");
-                }
-                
+                List<ViagemViewModel> viagensRetorno = TransformaViagensEmViewModelList(viagensExistentes);
+
                 if (viagensRetorno != null) return viagensRetorno;
                 return null;
             }
@@ -75,6 +67,21 @@ namespace ViagemAPI.Data.Repository
             {
                 throw exception;
             }
+        }
+
+        private List<ViagemViewModel> TransformaViagensEmViewModelList(List<Viagem> viagensExistentes)
+        {
+            var viagensRetorno = new List<ViagemViewModel>();
+            foreach (var viagem in viagensExistentes)
+            {
+                var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
+                var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
+                if (linhaDaViagem != null)
+                    viagensRetorno.Add(Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem));
+                else throw new Exception("Linha ou Motorista invalidos.");
+            }
+
+            return viagensRetorno;
         }
 
         public ViagemViewModel BuscarViagemPorId(int id)
@@ -111,19 +118,12 @@ namespace ViagemAPI.Data.Repository
         {
             try
             {
-                
+                var viagensRetorno = new List<ViagemViewModel>();
                 IEnumerable<Viagem> viagens = Context.Viagem.Where(v => v.DataPartida == dataDaViagem);
-                IList<ViagemViewModel> viagensRetorno = new List<ViagemViewModel>();
-                foreach (var viagem in viagens)
-                {
-                    var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagem.IdMotorista);
-                    var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagem.IdLinha);
-                    if (motoristaDaViagem != null && linhaDaViagem != null)
-                        viagensRetorno.Add(Services.TransformaViagemEmViewModel(viagem, linhaDaViagem, motoristaDaViagem));
-                    else throw new Exception("Linha ou Motorista invalidos.");
-                }
-                if (viagens != null) return viagensRetorno;
-                return null;
+                if (viagens != null) viagensRetorno = TransformaViagensEmViewModelList(viagens.ToList());
+                else throw new Exception("Viagem não encontrada");
+                if (viagensRetorno != null) return viagensRetorno;
+                throw new Exception("Erro na conversão de tipos.");
             }
             catch (Exception exception)
             {
@@ -147,8 +147,7 @@ namespace ViagemAPI.Data.Repository
                         var motoristaDaViagem = Context.Motorista.FirstOrDefault(m => m.Id == viagemPesquisada.IdMotorista);
                         var linhaDaViagem = Context.Linha.FirstOrDefault(l => l.Id == viagemPesquisada.IdLinha);
                         if (motoristaDaViagem != null && linhaDaViagem != null)
-                            viagemConvertida = Services.TransformaViagemEmViewModel(viagemPesquisada, linhaDaViagem, motoristaDaViagem);
-                            
+                            viagemConvertida = Services.TransformaViagemEmViewModel(viagemPesquisada, linhaDaViagem, motoristaDaViagem);    
                         else
                         {
                             throw new Exception("Motorista ou linha inválidos.");
