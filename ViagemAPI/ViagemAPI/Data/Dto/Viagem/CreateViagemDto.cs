@@ -1,24 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace ViagemAPI.Model
+namespace ViagemAPI.Data.Dto.Viagem
 {
-    public class Viagem
+    public class CreateViagemDto
     {
-        [Key]
-        public int Id { get; set; }
-
         public string NumeroServico { get; set; }
-
-        [ForeignKey("Linha")]
         public int IdLinha { get; set; }
-
-        [ForeignKey("Motorista")]
         public int? IdMotorista { get; set; }
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DataPartida { get; set; }
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DataChegada { get; set; }
     }
 }

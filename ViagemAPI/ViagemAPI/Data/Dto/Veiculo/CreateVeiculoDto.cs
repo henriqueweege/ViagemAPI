@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ViagemAPI.Data.Dto
+namespace ViagemAPI.Data.Dto.Veiculo
 {
-    public class VeiculoDto
+    public class CreateVeiculoDto
     {
         public string Placa { get; set; }
     }

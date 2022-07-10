@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using ViagemAPI.Data;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Motorista;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
-using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Services
 {
@@ -15,7 +14,7 @@ namespace ViagemAPI.Services
         {
             Mapper = mapper;
         }
-        public Motorista TransformaDtoEmMotorista(MotoristaDto motoristaParaMapear)
+        public Motorista TransformaCreateDtoEmMotorista(CreateMotoristaDto motoristaParaMapear)
         {
             Motorista motoristaMapeado;
             motoristaMapeado = Mapper.Map<Motorista>(motoristaParaMapear);
@@ -23,24 +22,32 @@ namespace ViagemAPI.Services
             throw new Exception("Erro no mapeamento");  
         }
 
-        public MotoristaViewModel TransformaMotoristaEmViewModel(Motorista motoristaParaMapear)
+        public ReadMotoristaDto TransformaMotoristaEmViewModel(Motorista motoristaParaMapear)
         {
-            MotoristaViewModel motoristaMapeado;
-            motoristaMapeado = Mapper.Map<MotoristaViewModel>(motoristaParaMapear);
+            ReadMotoristaDto motoristaMapeado;
+            motoristaMapeado = Mapper.Map<ReadMotoristaDto>(motoristaParaMapear);
             if (motoristaMapeado != null) return motoristaMapeado;
             throw new Exception("Erro no mapeamento");
         }
 
-        public IEnumerable<MotoristaViewModel> TransformaMotoristasEmViewModelList(IEnumerable<Motorista> listaParaConverter)
+        public IEnumerable<ReadMotoristaDto> TransformaMotoristasEmViewModelList(IEnumerable<Motorista> listaParaConverter)
         {
 
-            var motoristasRetorno = new List<MotoristaViewModel>();
+            var motoristasRetorno = new List<ReadMotoristaDto>();
             foreach (var motorista in listaParaConverter)
             {
                 motoristasRetorno.Add(TransformaMotoristaEmViewModel(motorista));
             }
             if (motoristasRetorno != null) return motoristasRetorno;
             throw new Exception("Erro  no mapeamento");
+        }
+
+        public Motorista TransformaUpdateDtoEmMotorista(UpdateMotoristaDto motoristaParaMapear)
+        {
+            Motorista motoristaMapeado;
+            motoristaMapeado = Mapper.Map<Motorista>(motoristaParaMapear);
+            if (motoristaMapeado != null) return motoristaMapeado;
+            throw new Exception("Erro no mapeamento");
         }
     }
 }

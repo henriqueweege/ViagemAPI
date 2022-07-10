@@ -1,6 +1,8 @@
-﻿namespace ViagemAPI.ViewModel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ViagemAPI.Data.Dto.Linha
 {
-    public class LinhaViewModel
+    public class UpdateLinhaDto
     {
         public int Id { get; set; }
         public string Nome { get; set; }

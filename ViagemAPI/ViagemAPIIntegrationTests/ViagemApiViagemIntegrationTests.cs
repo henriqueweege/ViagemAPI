@@ -17,13 +17,13 @@ namespace ViagemApiIntegrationTests
         [Fact]
         public async Task AdicionaViagemDeveriaRetornarObjetoValido()
         {
-            Random randNum = new Random();
             //arrange
+            Random randNum = new Random();
             var viagemDto = new ViagemDto()
             {
-                NumeroServico = $"{randNum.Next()}",
-                IdLinha = 1,
-                IdMotorista = 1,
+                NumeroServico = $"{randNum.Next(0,100)}",
+                IdLinha = 3,
+                IdMotorista = 2,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -55,8 +55,8 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new ViagemDto()
             {
                 NumeroServico = "1234",
-                IdLinha = 1,
-                IdMotorista = 1,
+                IdLinha = 3,
+                IdMotorista = 2,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -72,11 +72,13 @@ namespace ViagemApiIntegrationTests
         public async Task DeletarViagemPorIdDeveriaExcluirLinhaCriada()
         {
             //arrange
+            Random randNum = new Random();
+
             var viagemDto = new ViagemDto()
             {
-                NumeroServico = "1234",
-                IdLinha = 1,
-                IdMotorista = 1,
+                NumeroServico = $"{randNum.Next(1000, 100000)}",
+                IdLinha = 3,
+                IdMotorista = 2,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -111,8 +113,8 @@ namespace ViagemApiIntegrationTests
             var viagemParaAtualizar = new ViagemDto()
             {
                 NumeroServico = $"{randNum.Next()}",
-                IdLinha = 1,
-                IdMotorista = 1,
+                IdLinha = 3,
+                IdMotorista = 2,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };

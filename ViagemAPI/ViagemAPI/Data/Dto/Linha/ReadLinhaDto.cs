@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ViagemAPI.Data.Dto
+﻿namespace ViagemAPI.ViewModel
 {
-    public class LinhaDto
+    public class ReadLinhaDto
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public int Numero { get; set; }
         public string Origem { get; set; }

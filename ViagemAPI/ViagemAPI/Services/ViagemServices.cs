@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Viagem;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
-using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Services
 {
@@ -16,7 +15,7 @@ namespace ViagemAPI.Services
 
 
             
-        public Viagem TransformaDtoEmViagem(ViagemDto viagemParaMapear)
+        public Viagem TransformaCreateDtoEmViagem(CreateViagemDto viagemParaMapear)
         {
             Viagem viagemMapeada;
             viagemMapeada = Mapper.Map<Viagem>(viagemParaMapear);
@@ -25,16 +24,25 @@ namespace ViagemAPI.Services
             throw new Exception("Erro no mapeamento");
         }
 
-        public ViagemViewModel TransformaViagemEmViewModel(Viagem viagemParaMapear, Linha linha, Motorista? motorista)
+        public ReadViagemDto TransformaViagemEmViewModel(Viagem viagemParaMapear, Linha linha, Motorista? motorista)
         {
-            ViagemViewModel viagemMapeada;
-            viagemMapeada = Mapper.Map<ViagemViewModel>(viagemParaMapear);
+            ReadViagemDto viagemMapeada;
+            viagemMapeada = Mapper.Map<ReadViagemDto>(viagemParaMapear);
             viagemMapeada.NumeroLinha = linha.Numero;
             viagemMapeada.Origem = linha.Origem;
             viagemMapeada.Destino = linha.Destino;
 
             if (motorista == null) viagemMapeada.NomeMotorista = null;
             else viagemMapeada.NomeMotorista = motorista.Nome;
+
+            if (viagemMapeada != null) return viagemMapeada;
+            throw new Exception("Erro no mapeamento");
+        }
+
+        public Viagem TransformaUpdateDtoEmViagem(UpdateViagemDto viagemParaMapear)
+        {
+            Viagem viagemMapeada;
+            viagemMapeada = Mapper.Map<Viagem>(viagemParaMapear);
 
             if (viagemMapeada != null) return viagemMapeada;
             throw new Exception("Erro no mapeamento");

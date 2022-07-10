@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Motorista;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
-using ViagemAPI.ViewModel;
+using ViagemAPI.Services;
+using ViagemAPI.Services.ServicesContracts;
 
 namespace ViagemAPI.Controller
 {
@@ -11,20 +12,23 @@ namespace ViagemAPI.Controller
     public class MotoristaController : ControllerBase
     {
         public IMotoristaRepository Repository { get; set; }
-        public MotoristaController(MotoristaRepository repository)
+        public IMotoristaServices Services { get; set; }
+        public MotoristaController(MotoristaRepository repository, MotoristaServices services)
         {
             Repository = repository;
+            Services = services;
+
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<MotoristaViewModel> AdicionarMotorista(MotoristaDto dto)
+        public ActionResult<ReadMotoristaDto> AdicionarMotorista(CreateMotoristaDto dto)
         {
-
-            var motoristaAdicionado = Repository.CriarNovoMotorista(dto);
-            if (motoristaAdicionado != null) return motoristaAdicionado;
+            var motoristaMapeado = Services.TransformaCreateDtoEmMotorista(dto);
+            var motoristaAdicionado = Repository.CriarNovoMotorista(motoristaMapeado);
+            if (motoristaAdicionado != null) return Services.TransformaMotoristaEmViewModel(motoristaAdicionado);
             return BadRequest("Motorista não adicionado.");
 
 
@@ -34,11 +38,11 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<MotoristaViewModel>> BuscarTodasOsMotorista()
+        public ActionResult<IEnumerable<ReadMotoristaDto>> BuscarTodasOsMotorista()
         {
 
             var motoristasExistentes = Repository.BuscarTodosOsMotoristas();
-            if (motoristasExistentes != null) return Ok(motoristasExistentes);
+            if (motoristasExistentes != null) return Ok(Services.TransformaMotoristasEmViewModelList(motoristasExistentes));
             return NotFound("Motoristas não encontrados.");
 
         }
@@ -47,10 +51,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<MotoristaViewModel> BuscarMotoristaPorId(int id)
+        public ActionResult<ReadMotoristaDto> BuscarMotoristaPorId(int id)
         {
             var motorista = Repository.BuscarMotoristaPorId(id);
-            if (motorista != null) return Ok(motorista);
+            if (motorista != null) return Ok(Services.TransformaMotoristaEmViewModel(motorista));
             return NotFound("Motorista não encontrado.");
         }
 
@@ -59,10 +63,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<MotoristaViewModel> BuscarMotoristaPorCpf(string cpf)
+        public ActionResult<ReadMotoristaDto> BuscarMotoristaPorCpf(string cpf)
         {
             var motorista = Repository.BuscarMotoristaPeloCpf(cpf);
-            if (motorista != null) return Ok(motorista);
+            if (motorista != null) return Ok(Services.TransformaMotoristaEmViewModel(motorista));
             return NotFound("Motorista não encontrado.");
         }
 
@@ -70,10 +74,11 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<MotoristaViewModel> AtualizarMotorista(int id, MotoristaDto motorista)
+        public ActionResult<ReadMotoristaDto> AtualizarMotorista(UpdateMotoristaDto motorista)
         {
-            var motoristaAtualizado = Repository.AtualizarMotorista(id, motorista);
-            if (motoristaAtualizado != null) return Ok(motoristaAtualizado);
+            var motoristaConvertido = Services.TransformaUpdateDtoEmMotorista(motorista);
+            var motoristaAtualizado = Repository.AtualizarMotorista(motoristaConvertido);
+            if (motoristaAtualizado != null) return Ok(Services.TransformaMotoristaEmViewModel(motoristaAtualizado));
             return NotFound("Motorista não encontrado.");
         }
 

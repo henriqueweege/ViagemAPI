@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Linha;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
 using ViagemAPI.ViewModel;
@@ -14,7 +14,7 @@ namespace ViagemAPI.Services
             Mapper = mapper;
         }
 
-        public Linha TransformaDtoEmLinha(LinhaDto linhaParaMapear)
+        public Linha TransformaCreateDtoEmLinha(CreateLinhaDto linhaParaMapear)
         {
             Linha linhaMapeada;
             linhaMapeada = Mapper.Map<Linha>(linhaParaMapear);
@@ -23,10 +23,10 @@ namespace ViagemAPI.Services
 
         }
 
-        public LinhaViewModel TransformaLinhaEmViewModel(Linha linhaParaMapear)
+        public ReadLinhaDto TransformaLinhaEmViewModel(Linha linhaParaMapear)
         {
-            LinhaViewModel linhaMapeada;
-            linhaMapeada = Mapper.Map<LinhaViewModel>(linhaParaMapear);
+            ReadLinhaDto linhaMapeada;
+            linhaMapeada = Mapper.Map<ReadLinhaDto>(linhaParaMapear);
             if (linhaMapeada != null) return linhaMapeada;
             throw new Exception("Erro no mapeamento");
 
@@ -34,10 +34,10 @@ namespace ViagemAPI.Services
 
         }
 
-        public IEnumerable<LinhaViewModel> TransformaLinhasEmViewModelList(IEnumerable<Linha> listaParaConverter)
+        public IEnumerable<ReadLinhaDto> TransformaLinhasEmViewModelList(IEnumerable<Linha> listaParaConverter)
         {
 
-            IList<LinhaViewModel> linhasRetorno = new List<LinhaViewModel>();
+            IList<ReadLinhaDto> linhasRetorno = new List<ReadLinhaDto>();
             foreach (var linha in listaParaConverter)
             {
                 linhasRetorno.Add(TransformaLinhaEmViewModel(linha));
@@ -45,6 +45,14 @@ namespace ViagemAPI.Services
             if (linhasRetorno != null) return linhasRetorno.ToList();
             throw new Exception("Erro  no mapeamento");
 
+        }
+
+        public Linha TransformaUpdateDtoEmLinha(UpdateLinhaDto linhaParaMapear)
+        {
+            Linha linhaMapeada;
+            linhaMapeada = Mapper.Map<Linha>(linhaParaMapear);
+            if (linhaMapeada != null) return linhaMapeada;
+            throw new Exception("Erro no mapeamento");
         }
     }
 }

@@ -11,13 +11,14 @@ namespace ViagemAPI.Model
         private string placa;
         public string Placa
         {
-            get { return Placa; }
+            get { return placa; }
             set
             {
-                var regex = new Regex(@"^([A-Z]){3}-(\d){4}|([A-Z]){3}(\d){1}([A-Z]){1}(\d){2}$");
-                if (regex.IsMatch(value))
+                var regexPlacaAntiga = new Regex(@"^([A-Z]){3}-(\d){4}$");
+                var regexPlacaNova = new Regex(@"^([A-Z]){3}(\d){1}([A-Z]){1}(\d){2}$");
+                if (regexPlacaAntiga.IsMatch(value) || regexPlacaNova.IsMatch(value))
                 {
-                    Placa = value;
+                    placa = value;
                     return;
                 }
                 throw new Exception("Placa em fomato inválido.");

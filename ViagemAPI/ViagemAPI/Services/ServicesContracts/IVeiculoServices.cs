@@ -1,14 +1,15 @@
-﻿using ViagemAPI.Data.Dto;
+﻿using ViagemAPI.Data.Dto.Veiculo;
 using ViagemAPI.Model;
-using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Services.ServicesContracts
 {
     public interface IVeiculoServices
     {
-        public Veiculo TransformaDtoEmVeiculo(VeiculoDto veiculoParaMapear);
-        public VeiculoViewModel TransformaVeiculoEmViewModel(Veiculo linhaParaMapear);
-        public IEnumerable<VeiculoViewModel> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter);
+        public Veiculo TransformaCreateDtoEmVeiculo(CreateVeiculoDto veiculoParaMapear);
+        public Veiculo TransformaUpdateDtoEmVeiculo(UpdateVeiculoDto veiculoParaMapear);
+
+        public ReadVeiculoDto TransformaVeiculoEmViewModel(Veiculo linhaParaMapear);
+        public IEnumerable<ReadVeiculoDto> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter);
 
 
     }

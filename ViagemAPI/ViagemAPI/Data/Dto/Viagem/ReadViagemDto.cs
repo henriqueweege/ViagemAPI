@@ -1,8 +1,8 @@
 ﻿using ViagemAPI.Model;
 
-namespace ViagemAPI.ViewModel
+namespace ViagemAPI.Data.Dto.Viagem
 {
-    public class ViagemViewModel
+    public class ReadViagemDto
     {
         public int Id { get; set; }
         public string NumeroServico { get; set; }

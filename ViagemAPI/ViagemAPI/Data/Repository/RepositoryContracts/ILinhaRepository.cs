@@ -1,15 +1,15 @@
 ﻿using ViagemAPI.Data.Dto;
-using ViagemAPI.ViewModel;
+using ViagemAPI.Model;
 
 namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface ILinhaRepository
     {
-        LinhaViewModel CriarNovaLinha(LinhaDto linhaParaCriar);
-        IEnumerable<LinhaViewModel> BuscarTodasAsLinhas();
-        LinhaViewModel BuscarLinhaPorId(int id);
-        LinhaViewModel BuscarLinhaPeloNumero(int numero);
-        LinhaViewModel AtualizarLinha(int id, LinhaDto linhaParaAtualizar);
+        Linha CriarNovaLinha(Linha linhaParaCriar);
+        IEnumerable<Linha> BuscarTodasAsLinhas();
+        Linha BuscarLinhaPorId(int id);
+        Linha BuscarLinhaPeloNumero(int numero);
+        Linha AtualizarLinha(Linha linhaParaAtualizar);
         bool DeletarLinhaPorId(int id);
     }
 }

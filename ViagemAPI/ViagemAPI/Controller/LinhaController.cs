@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Linha;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
+using ViagemAPI.Services;
+using ViagemAPI.Services.ServicesContracts;
 using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Controller
@@ -10,20 +12,22 @@ namespace ViagemAPI.Controller
     [Route("[controller]")]
     public class LinhaController : ControllerBase
     {
+        public ILinhaServices Services { get; set; }
         public ILinhaRepository Repository { get; set; }
-        public LinhaController(LinhaRepository repository)
+        public LinhaController(LinhaRepository repository, LinhaServices services)
         {
             Repository = repository;
+            Services = services;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<LinhaViewModel> AdicionarLinha(LinhaDto dto) 
+        public ActionResult<ReadLinhaDto> AdicionarLinha(CreateLinhaDto dto) 
         {
-
-             var linhaAdicionada = Repository.CriarNovaLinha(dto);
+            var linhaMapeada = Services.TransformaCreateDtoEmLinha(dto);
+            var linhaAdicionada = Repository.CriarNovaLinha(linhaMapeada);
              if (linhaAdicionada != null) return Ok(linhaAdicionada);
              return BadRequest("Linha não adicionada");
 
@@ -34,11 +38,11 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<LinhaViewModel>> BuscarTodasAsLinha()
+        public ActionResult<IEnumerable<ReadLinhaDto>> BuscarTodasAsLinha()
         {
    
             var linhasExistentes = Repository.BuscarTodasAsLinhas();
-            if(linhasExistentes != null) return Ok(linhasExistentes);
+            if(linhasExistentes != null) return Ok(Services.TransformaLinhasEmViewModelList(linhasExistentes));
             return NotFound("Linhas não encontradas.");
 
         }
@@ -47,10 +51,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<LinhaViewModel> BuscarLinhaPorId(int id)
+        public ActionResult<ReadLinhaDto> BuscarLinhaPorId(int id)
         {
             var linha = Repository.BuscarLinhaPorId(id);
-            if (linha != null) return Ok(linha);
+            if (linha != null) return Ok(Services.TransformaLinhaEmViewModel(linha));
             return NotFound("Linha não encontrada.");
         }
 
@@ -59,10 +63,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<LinhaViewModel> BuscarLinhaPorNumero(int numero)
+        public ActionResult<ReadLinhaDto> BuscarLinhaPorNumero(int numero)
         {
             var linha = Repository.BuscarLinhaPeloNumero(numero);
-            if (linha != null) return Ok(linha);
+            if (linha != null) return Ok(Services.TransformaLinhaEmViewModel(linha));
             return NotFound("Linha não encontrada.");
         }
 
@@ -70,10 +74,11 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<LinhaViewModel> AtualizarLinha(int id, LinhaDto linha)
+        public ActionResult<ReadLinhaDto> AtualizarLinha(UpdateLinhaDto linha)
         {
-            var linhaAtualizada = Repository.AtualizarLinha(id, linha);
-            if (linhaAtualizada != null) return Ok(linhaAtualizada);
+            var linhaConvertida = Services.TransformaUpdateDtoEmLinha(linha);
+            var linhaAtualizada = Repository.AtualizarLinha(linhaConvertida);
+            if (linhaAtualizada != null) return Ok(Services.TransformaLinhaEmViewModel(linhaAtualizada));
             return NotFound("Linhas não encontrada.");
         }
 

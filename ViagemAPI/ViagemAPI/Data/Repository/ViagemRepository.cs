@@ -1,9 +1,9 @@
 ﻿using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Viagem;
 using ViagemAPI.Data.Repository.RepositoryContracts;
 using ViagemAPI.Model;
 using ViagemAPI.Services;
 using ViagemAPI.Services.ServicesContracts;
-using ViagemAPI.ViewModel;
 
 
 namespace ViagemAPI.Data.Repository
@@ -11,19 +11,19 @@ namespace ViagemAPI.Data.Repository
     public class ViagemRepository : IViagemRepository
     {
         public DataContext Context { get; set; }
-        public IViagemServices Services { get; set; }
-        public ViagemRepository(DataContext context, ViagemServices services)
+
+        public ViagemRepository(DataContext context)
         {
             Context = context;
-            Services = services;
+
         }
 
-        public ViagemViewModel CriarNovaViagem(ViagemDto viagemParaCriarDto)
+        public ReadViagemDto CriarNovaViagem(Viagem viagemParaCriar)
         {
 
-           if(CheckarMesmoNumero(viagemParaCriarDto.NumeroServico, viagemParaCriarDto.DataPartida))
+           if(CheckarMesmoNumero(viagemParaCriar.NumeroServico, viagemParaCriar.DataPartida))
            {
-                var viagemParaCriar = Services.TransformaDtoEmViagem(viagemParaCriarDto);
+                
                 Context.Add(viagemParaCriar);
                 if(Context.SaveChanges() > 0)
                     return BuscarViagemPorId(viagemParaCriar.Id);
@@ -34,16 +34,17 @@ namespace ViagemAPI.Data.Repository
 
         }
 
-        public IEnumerable<ViagemViewModel> BuscarTodasAsViagens()
+        public IEnumerable<ReadViagemDto> BuscarTodasAsViagens()
         {
 
-            IEnumerable<ViagemViewModel> viagensExistentes = (IEnumerable<ViagemViewModel>)
-                (from viagens in Context.Viagem
-                 join motorista in Context.Motorista 
-                 on viagens.IdMotorista equals motorista.Id
-                 join linha in Context.Linha 
-                 on viagens.IdLinha equals linha.Id 
-                 select new
+            var viagensExistentes =
+                from viagens in Context.Viagem
+                join linha in Context.Linha
+                on viagens.IdLinha equals linha.Id
+                join motorista in Context.Motorista
+                on viagens.IdMotorista equals motorista.Id into motoristaQuery
+                from motorista in motoristaQuery.DefaultIfEmpty()
+                select new ReadViagemDto()
                  {
                      Id = viagens.Id,
                      NumeroServico = viagens.NumeroServico,
@@ -53,25 +54,26 @@ namespace ViagemAPI.Data.Repository
                      NomeMotorista = motorista.Nome,
                      DataPartida = viagens.DataPartida,
                      DataChegada = viagens.DataChegada
-                 });
+                 };
 
 
-            if (viagensExistentes != null) return viagensExistentes;
-            return null;
+             return viagensExistentes;
+
         }
 
        
 
-        public ViagemViewModel BuscarViagemPorId(int id)
+        public ReadViagemDto BuscarViagemPorId(int id)
         {
-            ViagemViewModel viagensQuery = (ViagemViewModel)
+            var viagensQuery = 
                     (from viagens in Context.Viagem
-                     join motorista in Context.Motorista
-                     on viagens.IdMotorista equals motorista.Id
                      join linha in Context.Linha
                      on viagens.IdLinha equals linha.Id
+                     join motorista in Context.Motorista
+                     on viagens.IdMotorista equals motorista.Id into motoristaQuery
+                     from motorista in motoristaQuery.DefaultIfEmpty()
                      where viagens.Id == id
-                     select new
+                     select new ReadViagemDto()
                      {
                          Id = viagens.Id,
                          NumeroServico = viagens.NumeroServico,
@@ -84,21 +86,22 @@ namespace ViagemAPI.Data.Repository
                      });
 
 
-            if (viagensQuery != null) return viagensQuery;
-            return null;
+            return viagensQuery.First();
+
         }
 
-        public IEnumerable<ViagemViewModel> BuscarViagemPorData(DateTime dataDaViagem)
+        public IEnumerable<ReadViagemDto> BuscarViagemPorData(DateTime dataDaViagem)
         {
 
-                IEnumerable<ViagemViewModel> viagensQuery = (IEnumerable<ViagemViewModel>)
-                    (from viagens in Context.Viagem
-                     join motorista in Context.Motorista
-                     on viagens.IdMotorista equals motorista.Id
-                     join linha in Context.Linha
-                     on viagens.IdLinha equals linha.Id
-                     where viagens.DataPartida == dataDaViagem
-                     select new
+                var viagensQuery = 
+                    from viagens in Context.Viagem
+                    join linha in Context.Linha
+                    on viagens.IdLinha equals linha.Id
+                    join motorista in Context.Motorista
+                    on viagens.IdMotorista equals motorista.Id into motoristaQuery
+                    from motorista in motoristaQuery.DefaultIfEmpty()
+                    where viagens.DataPartida == dataDaViagem
+                     select new ReadViagemDto()
                      {
                          Id = viagens.Id,
                          NumeroServico = viagens.NumeroServico,
@@ -108,27 +111,26 @@ namespace ViagemAPI.Data.Repository
                          NomeMotorista = motorista.Nome,
                          DataPartida = viagens.DataPartida,
                          DataChegada = viagens.DataChegada
-                     });
+                     };
 
 
-                if (viagensQuery != null) return viagensQuery;
-                return null;
+                return viagensQuery;
+
 
 
             
         }
 
-        public ViagemViewModel AtualizarViagem(int id, ViagemDto viagemParaAtualizarDto)
+        public ReadViagemDto AtualizarViagem(Viagem viagemParaAtualizar)
         {
 
-            var viagemParaAtualizar = Services.TransformaDtoEmViagem(viagemParaAtualizarDto);
-            viagemParaAtualizar.Id = id;
+            
             Context.Viagem.Update(viagemParaAtualizar);
 
             if (Context.SaveChanges() > 0)
                 return  BuscarViagemPorId(viagemParaAtualizar.Id);    
-            else
-                return null;
+            
+            return null;
         }
 
         public bool DeletarViagemPorId(int id)
@@ -149,9 +151,13 @@ namespace ViagemAPI.Data.Repository
             IEnumerable<Viagem> viagensComEsseNumero = Context.Viagem.Where(v => v.NumeroServico == numeroParaCheckar);
             foreach(var viagem in viagensComEsseNumero)
             {
-                if (viagem.DataPartida == dataPartida) throw new Exception("Números de serviço devem ser únicos no dia.");
+                if (viagem.DataPartida.Year == dataPartida.Year && 
+                    viagem.DataPartida.Month == dataPartida.Month && 
+                    viagem.DataPartida.Day == dataPartida.Day) throw new Exception("Números de serviço devem ser únicos no dia.");
             }
-            return false;
+            return true;
         }
+
+
     }
 }

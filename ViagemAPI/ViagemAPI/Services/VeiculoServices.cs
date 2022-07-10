@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Veiculo;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
-using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Services
 {
@@ -14,7 +13,7 @@ namespace ViagemAPI.Services
         {
             Mapper = mapper;
         }
-        public Veiculo TransformaDtoEmVeiculo(VeiculoDto veiculoParaMapear)
+        public Veiculo TransformaCreateDtoEmVeiculo(CreateVeiculoDto veiculoParaMapear)
         {
             Veiculo veiculoMapeado;
             veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
@@ -23,23 +22,31 @@ namespace ViagemAPI.Services
            
         }
 
-        public VeiculoViewModel TransformaVeiculoEmViewModel(Veiculo veiculoParaMapear)
+        public ReadVeiculoDto TransformaVeiculoEmViewModel(Veiculo veiculoParaMapear)
         {
-            VeiculoViewModel veiculoMapeado;
-            veiculoMapeado = Mapper.Map<VeiculoViewModel>(veiculoParaMapear);
+            ReadVeiculoDto veiculoMapeado;
+            veiculoMapeado = Mapper.Map<ReadVeiculoDto>(veiculoParaMapear);
             if (veiculoMapeado != null) return veiculoMapeado;
             throw new Exception("Erro no mapeamento");
         }
 
-        public IEnumerable<VeiculoViewModel> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter)
+        public IEnumerable<ReadVeiculoDto> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter)
         {
-            var veiculosRetorno = new List<VeiculoViewModel>();
+            var veiculosRetorno = new List<ReadVeiculoDto>();
             foreach (var veiculo in listaParaConverter)
             {
                 veiculosRetorno.Add(TransformaVeiculoEmViewModel(veiculo));
             }
             if (veiculosRetorno != null) return veiculosRetorno;
             throw new Exception("Erro  no mapeamento");
+        }
+
+        public Veiculo TransformaUpdateDtoEmVeiculo(UpdateVeiculoDto veiculoParaMapear)
+        {
+            Veiculo veiculoMapeado;
+            veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
+            if (veiculoMapeado != null) return veiculoMapeado;
+            throw new Exception("Erro no mapeamento");
         }
     }
 }

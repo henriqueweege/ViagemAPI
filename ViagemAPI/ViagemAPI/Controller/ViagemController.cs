@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ViagemAPI.Data.Dto;
+using ViagemAPI.Data.Dto.Viagem;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Data.Repository.RepositoryContracts;
-using ViagemAPI.ViewModel;
+using ViagemAPI.Services;
+using ViagemAPI.Services.ServicesContracts;
 
 namespace ViagemAPI.Controller
 {
@@ -11,19 +12,21 @@ namespace ViagemAPI.Controller
     public class ViagemController : ControllerBase
     {
         public IViagemRepository Repository { get; set; }
-        public ViagemController(ViagemRepository repository)
+        public IViagemServices Services { get; set; }
+        public ViagemController(ViagemRepository repository, ViagemServices services)
         {
             Repository = repository;
+            Services = services;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ViagemViewModel> AdicionarViagem(ViagemDto dto)
+        public ActionResult<ReadViagemDto> AdicionarViagem(CreateViagemDto dto)
         {
 
-            var viagemAdicionada = Repository.CriarNovaViagem(dto);
+            var viagemAdicionada = Repository.CriarNovaViagem(Services.TransformaCreateDtoEmViagem(dto));
             if (viagemAdicionada != null) return Ok(viagemAdicionada);
             return BadRequest("Não é possível ter um número de serviço igual " +
                 "ao número de serviço de outra viagem que acontece no mesmo dia.");
@@ -34,7 +37,7 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<ViagemViewModel>> BuscarTodasAsViagem()
+        public ActionResult<IEnumerable<ReadViagemDto>> BuscarTodasAsViagem()
         {
 
             var viagensExistentes = Repository.BuscarTodasAsViagens();
@@ -47,7 +50,7 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ViagemViewModel> BuscarViagemPorId(int id)
+        public ActionResult<ReadViagemDto> BuscarViagemPorId(int id)
         {
             var viagem = Repository.BuscarViagemPorId(id);
             if (viagem != null) return Ok(viagem);
@@ -59,7 +62,7 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<ViagemViewModel>> BuscarViagemPorData(DateTime dataParaBusca)
+        public ActionResult<IEnumerable<ReadViagemDto>> BuscarViagemPorData(DateTime dataParaBusca)
         {
             var viagem = Repository.BuscarViagemPorData(dataParaBusca);
             if (viagem != null) return Ok(viagem);
@@ -70,9 +73,10 @@ namespace ViagemAPI.Controller
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ViagemViewModel> AtualizarViagem(int id, ViagemDto viagemParaAtualizar)
+        public ActionResult<ReadViagemDto> AtualizarViagem(UpdateViagemDto viagemParaAtualizarDto)
         {
-            var viagemAtualizada = Repository.AtualizarViagem(id, viagemParaAtualizar);
+            var viagemParaAtualizar = Services.TransformaUpdateDtoEmViagem(viagemParaAtualizarDto);
+            var viagemAtualizada = Repository.AtualizarViagem(viagemParaAtualizar);
             if (viagemAtualizada != null) return Ok(viagemAtualizada);
             return NotFound("Viagem não encontrada.");
         }

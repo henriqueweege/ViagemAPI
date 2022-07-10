@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ViagemAPI.Data.Dto
+namespace ViagemAPI.Data.Dto.Viagem
 {
-    public class ViagemDto
+    public class UpdateViagemDto
     {
+        public int Id { get; set; }
         public string NumeroServico { get; set; }
         public int IdLinha { get; set; }
         public int? IdMotorista { get; set; }

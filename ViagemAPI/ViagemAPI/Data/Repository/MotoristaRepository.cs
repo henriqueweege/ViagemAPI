@@ -12,54 +12,49 @@ namespace ViagemAPI.Data.Repository
     {
         public DataContext Context { get; set; }
 
-        public IMotoristaServices Services { get; set; }
-        public MotoristaRepository(DataContext context, MotoristaServices services)
+        public MotoristaRepository(DataContext context)
         {
             Context = context;
-            Services = services;
         }
-        public MotoristaViewModel CriarNovoMotorista(MotoristaDto motoristaParaCriar)
+        public Motorista CriarNovoMotorista(Motorista motoristaParaCriar)
         {
 
             var cpfCheckado = MesmoCpfCheck(motoristaParaCriar.Cpf);
             if (cpfCheckado == true) throw new Exception("Cpf já cadastrado");
-            var linhaMapeada = Services.TransformaDtoEmMotorista(motoristaParaCriar);
-            Context.Add(linhaMapeada);
-            if (Context.SaveChanges() > 0) return Services.TransformaMotoristaEmViewModel(Context.Motorista.OrderBy(m => m.Id)
-                                                                                        .LastOrDefault(m => m.Cpf == motoristaParaCriar.Cpf));
+
+            Context.Add(motoristaParaCriar);
+            if (Context.SaveChanges() > 0) return Context.Motorista.OrderBy(m => m.Id).LastOrDefault(m => m.Cpf == motoristaParaCriar.Cpf);
             return null;
 
         }
-        public MotoristaViewModel BuscarMotoristaPorId(int id)
+        public Motorista BuscarMotoristaPorId(int id)
         {
             var motoristaBuscado = Context.Motorista.FirstOrDefault(l => l.Id == id);
-            if(motoristaBuscado != null )  return Services.TransformaMotoristaEmViewModel(motoristaBuscado);
+            if(motoristaBuscado != null )  return motoristaBuscado;
             return null;
         }
-        public MotoristaViewModel BuscarMotoristaPeloCpf(string cpf)
+        public Motorista BuscarMotoristaPeloCpf(string cpf)
         {
 
             var motorista = Context.Motorista.FirstOrDefault(m => m.Cpf == cpf);
-            if (motorista != null) return Services.TransformaMotoristaEmViewModel(motorista);
+            if (motorista != null) return motorista;
             return null;
 
         }
-        public IEnumerable<MotoristaViewModel> BuscarTodosOsMotoristas()
+        public IEnumerable<Motorista> BuscarTodosOsMotoristas()
         {
 
             var motoristasExistentes = Context.Motorista.ToList();
-            if (motoristasExistentes != null) return Services.TransformaMotoristasEmViewModelList(motoristasExistentes);
+            if (motoristasExistentes != null) return motoristasExistentes;
             return null;
 
         }
 
-        public MotoristaViewModel AtualizarMotorista(int id, MotoristaDto motoristaParaAtualizar)
+        public Motorista AtualizarMotorista(Motorista motoristaParaAtualizar)
         {
 
-            var motoristaConvertido = Services.TransformaDtoEmMotorista(motoristaParaAtualizar);
-            motoristaConvertido.Id = id;
-            Context.Motorista.Update(motoristaConvertido);
-            if (Context.SaveChanges() > 0) return Services.TransformaMotoristaEmViewModel(motoristaConvertido);
+            Context.Motorista.Update(motoristaParaAtualizar);
+            if (Context.SaveChanges() > 0) return motoristaParaAtualizar;
             return null;
 
         }

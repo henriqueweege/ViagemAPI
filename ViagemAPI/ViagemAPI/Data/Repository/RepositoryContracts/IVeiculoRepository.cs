@@ -1,15 +1,16 @@
 ﻿using ViagemAPI.Data.Dto;
+using ViagemAPI.Model;
 using ViagemAPI.ViewModel;
 
 namespace ViagemAPI.Data.Repository.RepositoryContracts
 {
     public interface IVeiculoRepository
     {
-        VeiculoViewModel CriarNovoVeiculo(VeiculoDto veiculoParaCriar);
-        IEnumerable<VeiculoViewModel> BuscarTodosOsVeiculos();
-        VeiculoViewModel BuscarVeiculoPorId(int id);
-        VeiculoViewModel BuscarVeiculoPelaPlaca(string placa);
-        VeiculoViewModel AtualizarVeiculo(int id, VeiculoDto veiculoParaAtualizar);
+        Veiculo CriarNovoVeiculo(Veiculo veiculoParaCriar);
+        IEnumerable<Veiculo> BuscarTodosOsVeiculos();
+        Veiculo BuscarVeiculoPorId(int id);
+        Veiculo BuscarVeiculoPelaPlaca(string placa);
+        Veiculo AtualizarVeiculo(Veiculo veiculoParaAtualizar);
         bool DeletarVeiculoPorId(int id);
     }
 }

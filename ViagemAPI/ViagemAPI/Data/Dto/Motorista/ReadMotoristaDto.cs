@@ -1,6 +1,6 @@
-﻿namespace ViagemAPI.ViewModel
+﻿namespace ViagemAPI.Data.Dto.Motorista
 {
-    public class MotoristaViewModel
+    public class ReadMotoristaDto
     {
         public int Id { get; set; }
         public string Nome { get; set; }
