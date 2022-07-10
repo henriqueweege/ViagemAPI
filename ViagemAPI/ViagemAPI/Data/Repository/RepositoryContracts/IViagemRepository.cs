@@ -12,7 +12,7 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
         IEnumerable<ViagemViewModel> BuscarViagemPorData(DateTime dataDaViagem);
         ViagemViewModel AtualizarViagem(int id, ViagemDto viagemParaAtualizar);
         bool DeletarViagemPorId(int id);
-        public bool MesmoNumeroCheck(string numeroParaCheckar, DateTime dataPartida);
+        public bool CheckarMesmoNumero(string numeroParaCheckar, DateTime dataPartida);
 
     }
 }

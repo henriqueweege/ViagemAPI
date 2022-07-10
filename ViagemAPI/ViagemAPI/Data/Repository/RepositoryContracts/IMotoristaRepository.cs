@@ -12,6 +12,6 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
         MotoristaViewModel BuscarMotoristaPeloCpf(string cpf);
         MotoristaViewModel AtualizarMotorista(int id, MotoristaDto motoristaParaAtualizar);
         bool DeletarMotoristaPorId(int id);
-        public bool MesmoCpfCheck(string placa);
+
     }
 }

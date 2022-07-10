@@ -20,8 +20,7 @@ namespace ViagemAPI.Data.Repository
         
         public LinhaViewModel CriarNovaLinha(LinhaDto linhaDto)
         {
-            try
-            {
+
                 var linhaMapeada = Services.TransformaDtoEmLinha(linhaDto);
                 Context.Add(linhaMapeada);
                 if (Context.SaveChanges() > 0) return Services.TransformaLinhaEmViewModel( Context.Linha.OrderBy(l => l.Id).LastOrDefault(l => l.Numero == linhaDto.Numero && 
@@ -29,92 +28,61 @@ namespace ViagemAPI.Data.Repository
                                                                                 l.Origem == linhaDto.Origem &&
                                                                                 l.Destino == linhaDto.Destino));
                 return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
         }
 
         public LinhaViewModel BuscarLinhaPorId(int id)
         {
-            try
-            {
-                return Services.TransformaLinhaEmViewModel(Context.Linha.FirstOrDefault(l => l.Id == id));
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
+
+            var linhaBuscada = Context.Linha.FirstOrDefault(l => l.Id == id);
+            if(linhaBuscada != null) return Services.TransformaLinhaEmViewModel(linhaBuscada);
+            return null;
+
         }
 
         public IEnumerable<LinhaViewModel> BuscarTodasAsLinhas()
         {
-            try
-            {
-                IEnumerable<Linha> linhasExistentes = Context.Linha.ToList();
-                if (linhasExistentes != null)
-                {
-                    var linhasConvertidas = Services.TransformaLinhasEmViewModelList(linhasExistentes);
-                    if (linhasConvertidas != null) return linhasConvertidas.ToList();
-                    throw new Exception("Erro na conversão.");
-                }
-                return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
+
+             IEnumerable<Linha> linhasExistentes = Context.Linha.ToList();
+             if (linhasExistentes != null)
+             {
+                 var linhasConvertidas = Services.TransformaLinhasEmViewModelList(linhasExistentes);
+                 if (linhasConvertidas != null) return linhasConvertidas.ToList();
+                 throw new Exception("Erro na conversão.");
+             }
+             return null;
+
         }
         public LinhaViewModel BuscarLinhaPeloNumero(int numero)
         {
-            try
-            {
+
                 var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
                 if (linha != null) return Services.TransformaLinhaEmViewModel(linha);
                 return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
+
         }
 
         public LinhaViewModel AtualizarLinha(int id, LinhaDto linhaParaAtualizar)
         {
-            try
-            {
-                var linhaConvertida = Services.TransformaDtoEmLinha(linhaParaAtualizar);
-                linhaConvertida.Id = id;
-                Context.Linha.Update(linhaConvertida);
-                if (Context.SaveChanges() > 0) return Services.TransformaLinhaEmViewModel(linhaConvertida);
-                return null;
-            }
-            catch(Exception exception)
-            {
-                throw exception;
-            }
+            var linhaConvertida = Services.TransformaDtoEmLinha(linhaParaAtualizar);
+            linhaConvertida.Id = id;
+            Context.Linha.Update(linhaConvertida);
+            if (Context.SaveChanges() > 0) return Services.TransformaLinhaEmViewModel(linhaConvertida);
+            return null;
         }
 
 
         public bool DeletarLinhaPorId(int id)
         {
-            try
-            {
-                var linhaParaDeletar = Context.Linha.FirstOrDefault(l => l.Id == id);
-                if (linhaParaDeletar != null) Context.Linha.Remove(linhaParaDeletar);
-                else
-                {
-                    return false;
-                }
-                if (Context.SaveChanges() > 0) return true;
-                return false;
 
-            }
-            catch(Exception exception)
+            var linhaParaDeletar = Context.Linha.FirstOrDefault(l => l.Id == id);
+            if (linhaParaDeletar != null) Context.Linha.Remove(linhaParaDeletar);
+            else
             {
-                throw exception;
+                return false;
             }
+            if (Context.SaveChanges() > 0) return true;
+            return false;
+
         }
 
     }

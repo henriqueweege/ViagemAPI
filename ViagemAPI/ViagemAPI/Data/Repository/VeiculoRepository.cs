@@ -20,111 +20,76 @@ namespace ViagemAPI.Data.Repository
 
         public VeiculoViewModel CriarNovoVeiculo(VeiculoDto veiculoParaCriar)
         {
-            try
-            {
-                var placaCheckada = MesmaPlacaCheck(veiculoParaCriar.Placa);
-                if (placaCheckada == true) throw new Exception("Placa já cadastrado");
-                var veiculoMapeado = Services.TransformaDtoEmVeiculo(veiculoParaCriar);
-                Context.Add(veiculoMapeado);
-                if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(Context.Veiculo.OrderBy(v => v.Id)
-                                                                                            .LastOrDefault(v => v.Placa == veiculoParaCriar.Placa));
-                return null;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+
+            var placaCheckada = MesmaPlacaCheck(veiculoParaCriar.Placa);
+            if (placaCheckada) throw new Exception("Placa já cadastrada.");
+
+            var veiculoMapeado = Services.TransformaDtoEmVeiculo(veiculoParaCriar);
+            Context.Add(veiculoMapeado);
+
+            if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(Context.Veiculo.OrderBy(v => v.Id)
+                                                                                        .LastOrDefault(v => v.Placa == veiculoParaCriar.Placa));
+            return null;
+
         }
 
         public IEnumerable<VeiculoViewModel> BuscarTodosOsVeiculos()
         {
-            try
-            {
-                var veiculosExistentes = Context.Veiculo;
-                if (veiculosExistentes != null) return Services.TransformaVeiculosEmViewModelList(veiculosExistentes);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+
+            var veiculosExistentes = Context.Veiculo;
+            if (veiculosExistentes != null) return Services.TransformaVeiculosEmViewModelList(veiculosExistentes);
+            return null;
         }
 
         public VeiculoViewModel BuscarVeiculoPorId(int id)
         {
-            try
-            {
-                return Services.TransformaVeiculoEmViewModel(Context.Veiculo.FirstOrDefault(v => v.Id == id));
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            var veiculoPesquisado = Context.Veiculo.FirstOrDefault(v => v.Id == id);
+
+            if(veiculoPesquisado != null) return Services.TransformaVeiculoEmViewModel(veiculoPesquisado);
+            return null;
         }
 
         public VeiculoViewModel BuscarVeiculoPelaPlaca(string placa)
         {
-            try
-            {
-                var veiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
-                if (veiculo != null) return Services.TransformaVeiculoEmViewModel(veiculo);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+
+            var veiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
+            if (veiculo != null) return Services.TransformaVeiculoEmViewModel(veiculo);
+            return null;
+
+
         }
 
         public VeiculoViewModel AtualizarVeiculo(int id, VeiculoDto veiculoParaAtualizar)
         {
-            try
-            {
+            
 
-                var veiculoConvertido = Services.TransformaDtoEmVeiculo(veiculoParaAtualizar);
-                veiculoConvertido.Id = id;
-                Context.Veiculo.Update(veiculoConvertido);
-                if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(veiculoConvertido);
-                return null;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            var veiculoConvertido = Services.TransformaDtoEmVeiculo(veiculoParaAtualizar);
+            veiculoConvertido.Id = id;
+            Context.Veiculo.Update(veiculoConvertido);
+            if (Context.SaveChanges() > 0) return Services.TransformaVeiculoEmViewModel(veiculoConvertido);
+            return null;
+
+
         }
 
         public bool DeletarVeiculoPorId(int id)
         {
-            try
-            {
-                var veiculoParaDeletar = Context.Motorista.FirstOrDefault(v => v.Id == id);
-                if (veiculoParaDeletar != null) Context.Motorista.Remove(veiculoParaDeletar);
-                else
-                {
-                    return false;
-                }
-                if (Context.SaveChanges() > 0) return true;
-                return false;
 
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            var veiculoParaDeletar = Context.Motorista.FirstOrDefault(v => v.Id == id);
+            if (veiculoParaDeletar != null) Context.Motorista.Remove(veiculoParaDeletar);
+            else return false;
+
+            if (Context.SaveChanges() > 0) return true;
+            return false;
         }
 
         private bool MesmaPlacaCheck(string placa)
         {
-            try
-            {
-                var existeVeiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
-                if (existeVeiculo == null) return false;
-                return true;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+
+            var existeVeiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
+            if (existeVeiculo == null) return false;
+            return true;
+
         }
     }
 }

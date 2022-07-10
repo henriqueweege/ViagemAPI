@@ -17,51 +17,29 @@ namespace ViagemAPI.Services
         public Veiculo TransformaDtoEmVeiculo(VeiculoDto veiculoParaMapear)
         {
             Veiculo veiculoMapeado;
-            try
-            {
-                veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
-                if (veiculoMapeado != null) return veiculoMapeado;
-                throw new Exception("Erro no mapeamento");
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
+            if (veiculoMapeado != null) return veiculoMapeado;
+            throw new Exception("Erro no mapeamento");
            
         }
 
         public VeiculoViewModel TransformaVeiculoEmViewModel(Veiculo veiculoParaMapear)
         {
             VeiculoViewModel veiculoMapeado;
-            try
-            {
-                veiculoMapeado = Mapper.Map<VeiculoViewModel>(veiculoParaMapear);
-                if (veiculoMapeado != null) return veiculoMapeado;
-                throw new Exception("Erro no mapeamento");
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-            
+            veiculoMapeado = Mapper.Map<VeiculoViewModel>(veiculoParaMapear);
+            if (veiculoMapeado != null) return veiculoMapeado;
+            throw new Exception("Erro no mapeamento");
         }
 
         public IEnumerable<VeiculoViewModel> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter)
         {
-            try
+            var veiculosRetorno = new List<VeiculoViewModel>();
+            foreach (var veiculo in listaParaConverter)
             {
-                var veiculosRetorno = new List<VeiculoViewModel>();
-                foreach (var veiculo in listaParaConverter)
-                {
-                    veiculosRetorno.Add(TransformaVeiculoEmViewModel(veiculo));
-                }
-                if (veiculosRetorno != null) return veiculosRetorno;
-                throw new Exception("Erro na conversão");
+                veiculosRetorno.Add(TransformaVeiculoEmViewModel(veiculo));
             }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            if (veiculosRetorno != null) return veiculosRetorno;
+            throw new Exception("Erro  no mapeamento");
         }
     }
 }

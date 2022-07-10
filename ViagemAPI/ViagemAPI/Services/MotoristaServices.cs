@@ -18,53 +18,29 @@ namespace ViagemAPI.Services
         public Motorista TransformaDtoEmMotorista(MotoristaDto motoristaParaMapear)
         {
             Motorista motoristaMapeado;
-            try
-            {
-                motoristaMapeado = Mapper.Map<Motorista>(motoristaParaMapear);
-                if (motoristaMapeado != null) return motoristaMapeado;
-                throw new Exception("Erro no mapeamento");
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-           
+            motoristaMapeado = Mapper.Map<Motorista>(motoristaParaMapear);
+            if (motoristaMapeado != null) return motoristaMapeado;
+            throw new Exception("Erro no mapeamento");  
         }
 
         public MotoristaViewModel TransformaMotoristaEmViewModel(Motorista motoristaParaMapear)
         {
             MotoristaViewModel motoristaMapeado;
-            try
-            {
-                motoristaMapeado = Mapper.Map<MotoristaViewModel>(motoristaParaMapear);
-                if (motoristaMapeado != null) return motoristaMapeado;
-                throw new Exception("Erro no mapeamento");
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-           
+            motoristaMapeado = Mapper.Map<MotoristaViewModel>(motoristaParaMapear);
+            if (motoristaMapeado != null) return motoristaMapeado;
+            throw new Exception("Erro no mapeamento");
         }
 
         public IEnumerable<MotoristaViewModel> TransformaMotoristasEmViewModelList(IEnumerable<Motorista> listaParaConverter)
         {
-            try
+
+            var motoristasRetorno = new List<MotoristaViewModel>();
+            foreach (var motorista in listaParaConverter)
             {
-                var motoristasRetorno = new List<MotoristaViewModel>();
-                foreach (var motorista in listaParaConverter)
-                {
-                    motoristasRetorno.Add(TransformaMotoristaEmViewModel(motorista));
-                }
-                if (motoristasRetorno != null) return motoristasRetorno;
-                throw new Exception("Erro na conversão");
+                motoristasRetorno.Add(TransformaMotoristaEmViewModel(motorista));
             }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            if (motoristasRetorno != null) return motoristasRetorno;
+            throw new Exception("Erro  no mapeamento");
         }
-
-
     }
 }
