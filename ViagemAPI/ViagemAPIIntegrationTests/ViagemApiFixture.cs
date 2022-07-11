@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ViagemApi.Client;
 
-namespace ViagemAPIIntegrationTests
+namespace ViagemApiIntegrationTests
 {
     public class ViagemApiFixture : IDisposable
     {

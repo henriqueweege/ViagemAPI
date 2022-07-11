@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XrCPHwSI5UFpfSMXLIKyMCUgjIQySP+ElDahRGVyUfu3UVVZAeqj8sGkhO1UheaJFme/zg/40741qwfoy4UNLQ==",
+  "dgSpecHash": "PSE7Pt6b/wGyubMSrZOzrmyUbT6FTs90VUVeyQbAjL2Cuo2hqbdUjUkau7tZ92wU+EGt/eCMJmUe59ylYjGA3Q==",
   "success": true,
   "projectFilePath": "C:\\TestesPraticos\\ViagemAPI\\ViagemAPI\\ViagemAPIIntegrationTests\\ViagemApiIntegrationTests.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\henri\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
+    "C:\\Users\\henri\\.nuget\\packages\\fluentassertions\\6.7.0\\fluentassertions.6.7.0.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.6\\microsoft.aspnetcore.cryptography.internal.6.0.6.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.6\\microsoft.aspnetcore.cryptography.keyderivation.6.0.6.nupkg.sha512",
     "C:\\Users\\henri\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.6\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.6.nupkg.sha512",

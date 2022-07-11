@@ -15,13 +15,14 @@ namespace ViagemApiIntegrationTests
             ViagemApiFixture = ViagemFixture;
         }
         [Fact]
-        public async Task AdicionaVeiculoDeveriaRetornarObjetoValido()
+        public async Task AdicionarVeiculoDeveriaRetornarObjetoValido()
         {
             //arrange
-            var veiculoDto = new VeiculoDto()
+            Random randNum = new Random();
+            var veiculoDto = new CreateVeiculoDto()
             {
                 
-                Placa = "AWE-1111"
+                Placa = $"AWE-{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}"
             };
 
             //act
@@ -56,13 +57,14 @@ namespace ViagemApiIntegrationTests
 
 
         [Fact]
-        public async Task DeletarVeiculoPorIdDeveriaExcluirLinhaCriada()
+        public async Task DeletarVeiculoPorIdDeveriaExcluirVeiculoCriado()
         {
             //arrange
-            var veiculoDto = new VeiculoDto()
+            Random randNum = new Random();
+            var veiculoDto = new CreateVeiculoDto()
             {
 
-                Placa = "AAA-1111"
+                Placa = $"AAA-{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}"
             };
             var veiculoAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarVeiculo(veiculoDto);
 
@@ -93,15 +95,18 @@ namespace ViagemApiIntegrationTests
         public async Task AtualizarVeiculoDeveriaRetornarObjetoValido()
         {
             //arrange
-            var veiculoParaAtualizar = new VeiculoDto()
+            Random randNum = new Random();
+            var veiculoParaAtualizar = new UpdateVeiculoDto()
             {
-                Placa = "DDD-1111"
+                Id= 1,
+                Placa = $"DDD-{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}"
             };
 
             //act
-            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarVeiculo(1, veiculoParaAtualizar);
+            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarVeiculo(veiculoParaAtualizar);
             //assert
             Assert.Equal(veiculoParaAtualizar.Placa, motoristaAtualizado.Placa);
         }
+
     }
 }

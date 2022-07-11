@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using ViagemAPI.Data;
 using ViagemAPI.Data.Repository;
 using ViagemAPI.Services;
@@ -22,7 +24,19 @@ builder.Services.AddScoped<ViagemRepository, ViagemRepository>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddSwaggerGen(c =>
+{
 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+
+        Version = "1.0.0",
+        Title = "ViagemApi",
+    });
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

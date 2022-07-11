@@ -1,4 +1,8 @@
-namespace ViagemAPIIntegrationTests
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+
+namespace ViagemApiIntegrationTests
 {
     public class ViagemApiLinhaIntegrationTests : IClassFixture<ViagemApiFixture>
     {
@@ -11,12 +15,12 @@ namespace ViagemAPIIntegrationTests
         public async Task AdicionarLinhaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var linhaDto = new LinhaDto()
+            var linhaDto = new CreateLinhaDto()
             {
                 Nome = "LinhaTeste",
-                Numero= 1,
-                Origem="Qualquer",
-                Destino="Qualquer 2"
+                Numero = 1,
+                Origem = "Qualquer",
+                Destino = "Qualquer 2"
             };
 
             //act
@@ -28,13 +32,13 @@ namespace ViagemAPIIntegrationTests
         }
 
         [Fact]
-        public async Task BuscarTodasAsLinhasDeveriaRetornarMaisDeUmObjetoValido()
+        public async Task BuscarTodasAsLinhasDeveriaRetornarMaisDeUmObjeto()
         {
             //arrange
 
             //act
-            IEnumerable<LinhaViewModel> linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
-            
+            var linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
+
             //assert
             Assert.True(linhas.Count() > 1);
 
@@ -44,7 +48,7 @@ namespace ViagemAPIIntegrationTests
         public async Task BuscarLinhaPorIdDeveriaRetornarObjetoValido()
         {
             //arrange
-            var linhaDto = new LinhaDto()
+            var linhaDto = new CreateLinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero = 1,
@@ -64,7 +68,7 @@ namespace ViagemAPIIntegrationTests
         public async Task DeletarLinhaPorIdDeveriaExcluirLinhaCriada()
         {
             //arrange
-            var linhaDto = new LinhaDto()
+            var linhaDto = new CreateLinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero = 1,
@@ -75,11 +79,11 @@ namespace ViagemAPIIntegrationTests
 
             //act
             await ViagemApiFixture.ViagemApiClient.DeletarLinhaPorId(linhaResposta.Id);
-            var existe =  ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(linhaResposta.Id).IsCompletedSuccessfully;
+            var existe = ViagemApiFixture.ViagemApiClient.BuscarLinhaPorId(linhaResposta.Id).IsCompletedSuccessfully;
             //assert
             Assert.False(existe);
 
-            
+
         }
 
         [Fact]
@@ -88,38 +92,42 @@ namespace ViagemAPIIntegrationTests
             //arrange
 
             Random randNum = new Random();
-           
 
-            var linhaDto = new LinhaDto()
+
+            var linhaDto = new CreateLinhaDto()
             {
                 Nome = "LinhaTeste",
                 Numero = randNum.Next(),
                 Origem = "Qualquer",
                 Destino = "Qualquer 2"
             };
-            var linhaCriada = await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
+            await ViagemApiFixture.ViagemApiClient.AdicionarLinha(linhaDto);
             //act
-            var linhaBuscada = await ViagemApiFixture.ViagemApiClient.BuscarLinhaPorNumeroAsync(linhaDto.Numero);
+            var linhaBuscada = await  ViagemApiFixture.ViagemApiClient.BuscarLinhaPorNumeroAsync(linhaDto.Numero);
 
             //assert
-            Assert.Equal(linhaBuscada.Id, linhaCriada.Id);
+            Assert.True(linhaBuscada.ToList().Count > 0);
+
         }
 
         [Fact]
         public async Task AtualizarLinhaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var linhaParaAtualizar = new LinhaDto()
+            var linhaParaAtualizar = new UpdateLinhaDto()
             {
+                Id = 3,
                 Nome = "LinhaAtualizada",
                 Numero = 8,
                 Origem = "Qualquer",
                 Destino = "Qualquer 2"
             };
             //act
-            var linhaAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarLinha(1, linhaParaAtualizar);
+            var linhaAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarLinha(linhaParaAtualizar);
             //assert
             Assert.Equal(linhaParaAtualizar.Nome, linhaAtualizada.Nome);
         }
+
+       
     }
 }

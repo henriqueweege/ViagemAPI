@@ -19,14 +19,19 @@ namespace ViagemAPI.Controller
             Services = services;
 
         }
-
+        /// <summary>
+        /// Adicionar motorista.
+        /// </summary>
+        /// <param name="motoristaDto">Motorista para ser adicionado.</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ReadMotoristaDto> AdicionarMotorista(CreateMotoristaDto dto)
+        public ActionResult<ReadMotoristaDto> AdicionarMotorista(CreateMotoristaDto motoristaDto)
         {
-            var motoristaMapeado = Services.TransformaCreateDtoEmMotorista(dto);
+            if (!Services.CheckarFormatoCpf(motoristaDto.Cpf)) return BadRequest("Cpf em formato inválido.");
+            var motoristaMapeado = Services.TransformaCreateDtoEmMotorista(motoristaDto);
             var motoristaAdicionado = Repository.CriarNovoMotorista(motoristaMapeado);
             if (motoristaAdicionado != null) return Services.TransformaMotoristaEmViewModel(motoristaAdicionado);
             return BadRequest("Motorista não adicionado.");
@@ -34,6 +39,11 @@ namespace ViagemAPI.Controller
 
         }
 
+
+        /// <summary>
+        /// Buscar todos os  motoristas.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
@@ -47,6 +57,12 @@ namespace ViagemAPI.Controller
 
         }
 
+
+        /// <summary>
+        /// Buscar motorista por id.
+        /// </summary>
+        /// <param name="id">Id  a ser pesquisado.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
@@ -58,30 +74,52 @@ namespace ViagemAPI.Controller
             return NotFound("Motorista não encontrado.");
         }
 
+
+        /// <summary>
+        /// Buscar motorista por Cpf.
+        /// </summary>
+        /// <param name="cpf">Cpf do motorista para pesquisar.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("BuscarMotoristaPeloCpf")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]        
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ReadMotoristaDto> BuscarMotoristaPorCpf(string cpf)
         {
+            if (!Services.CheckarFormatoCpf(cpf)) return BadRequest("Cpf em formato inválido.");
             var motorista = Repository.BuscarMotoristaPeloCpf(cpf);
             if (motorista != null) return Ok(Services.TransformaMotoristaEmViewModel(motorista));
             return NotFound("Motorista não encontrado.");
         }
 
+
+        /// <summary>
+        /// Atualizar motorista.
+        /// </summary>
+        /// <param name="motoristaDto">Motorista a ser atualizado.</param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]        
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ReadMotoristaDto> AtualizarMotorista(UpdateMotoristaDto motorista)
+        public ActionResult<ReadMotoristaDto> AtualizarMotorista(UpdateMotoristaDto motoristaDto)
         {
-            var motoristaConvertido = Services.TransformaUpdateDtoEmMotorista(motorista);
+            if (!Services.CheckarFormatoCpf(motoristaDto.Cpf)) return BadRequest("Cpf em formato inválido.");
+            var motoristaConvertido = Services.TransformaUpdateDtoEmMotorista(motoristaDto);
             var motoristaAtualizado = Repository.AtualizarMotorista(motoristaConvertido);
             if (motoristaAtualizado != null) return Ok(Services.TransformaMotoristaEmViewModel(motoristaAtualizado));
             return NotFound("Motorista não encontrado.");
         }
 
+
+        /// <summary>
+        /// Deletar motorista.
+        /// </summary>
+        /// <param name="id">Id do motorista a ser deletado.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -10,6 +10,7 @@ namespace ViagemAPI.Services.ServicesContracts
 
         public ReadVeiculoDto TransformaVeiculoEmViewModel(Veiculo linhaParaMapear);
         public IEnumerable<ReadVeiculoDto> TransformaVeiculosEmViewModelList(IEnumerable<Veiculo> listaParaConverter);
+        public bool CheckarFormatoPlaca(string placaParaCheckar);
 
 
     }

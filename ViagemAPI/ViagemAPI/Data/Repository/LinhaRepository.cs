@@ -40,15 +40,15 @@ namespace ViagemAPI.Data.Repository
         {
 
              IEnumerable<Linha> linhasExistentes = Context.Linha.ToList();
-             if (linhasExistentes != null) return linhasExistentes;     
+             if (linhasExistentes.ToList().Count > 0) return linhasExistentes;     
              return null;
 
         }
-        public Linha BuscarLinhaPeloNumero(int numero)
+        public IEnumerable<Linha> BuscarLinhaPeloNumero(int numero)
         {
 
-                var linha = Context.Linha.FirstOrDefault(l => l.Numero == numero);
-                if (linha != null) return linha;
+                var linha = Context.Linha.Where(l => l.Numero == numero);
+                if (linha.ToList().Count > 0) return linha;
                 return null;
 
         }

@@ -19,7 +19,7 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             Random randNum = new Random();
-            var viagemDto = new ViagemDto()
+            var viagemDto = new CreateViagemDto()
             {
                 NumeroServico = $"{randNum.Next(0,100)}",
                 IdLinha = 3,
@@ -29,7 +29,7 @@ namespace ViagemApiIntegrationTests
             };
 
             //act
-            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionaViagem(viagemDto);
+            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionarViagem(viagemDto);
 
 
             //assert
@@ -41,7 +41,7 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             //act
-            IEnumerable<ViagemViewModel> veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodosAsViagens();
+            IEnumerable<ReadViagemDto> veiculos = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsViagens();
 
             //assert
             Assert.True(veiculos.Count() >= 1);
@@ -52,15 +52,16 @@ namespace ViagemApiIntegrationTests
         public async Task BuscarViagemPeloIdDeveriaRetornarObjetoValido()
         {
             //arrange
-            var viagemDto = new ViagemDto()
+            Random randNum = new Random();
+            var viagemDto = new CreateViagemDto()
             {
-                NumeroServico = "1234",
+                NumeroServico = $"{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0,9)}",
                 IdLinha = 3,
                 IdMotorista = 2,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
-            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionaViagem(viagemDto);
+            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionarViagem(viagemDto);
             //act
             var viagem = await ViagemApiFixture.ViagemApiClient.BuscarViagemPorId(viagemAdicionada.Id);
             //assert
@@ -69,12 +70,12 @@ namespace ViagemApiIntegrationTests
 
 
         [Fact]
-        public async Task DeletarViagemPorIdDeveriaExcluirLinhaCriada()
+        public async Task DeletarViagemPorIdDeveriaExcluirViagemCriada()
         {
             //arrange
             Random randNum = new Random();
 
-            var viagemDto = new ViagemDto()
+            var viagemDto = new CreateViagemDto()
             {
                 NumeroServico = $"{randNum.Next(1000, 100000)}",
                 IdLinha = 3,
@@ -82,7 +83,7 @@ namespace ViagemApiIntegrationTests
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
-            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionaViagem(viagemDto);
+            var viagemAdicionada = await ViagemApiFixture.ViagemApiClient.AdicionarViagem(viagemDto);
 
             //act
             await ViagemApiFixture.ViagemApiClient.DeletarViagemPorId(viagemAdicionada.Id);
@@ -94,24 +95,25 @@ namespace ViagemApiIntegrationTests
         }
 
         [Fact]
-        public async Task BuscarTodasAsViagensDeveriaRetornarMiasDeUmObjeto()
+        public async Task BuscarTodasAsViagensDeveriaRetornarMaisDeUmObjeto()
         {
             //arrange
 
             //act
-            var viagens = await ViagemApiFixture.ViagemApiClient.BuscarTodosAsViagens();
+            var viagens = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsViagens();
 
             //assert
             Assert.True(viagens.Count()>=1);
         }
 
         [Fact]
-        public async Task AtualizarVeiculoDeveriaRetornarObjetoValido()
+        public async Task AtualizarViagemDeveriaRetornarObjetoValido()
         {
             Random randNum = new Random();
 
-            var viagemParaAtualizar = new ViagemDto()
+            var viagemParaAtualizar = new UpdateViagemDto()
             {
+                Id=6,
                 NumeroServico = $"{randNum.Next()}",
                 IdLinha = 3,
                 IdMotorista = 2,
@@ -119,7 +121,7 @@ namespace ViagemApiIntegrationTests
                 DataChegada = DateTime.Today
             };
             //act
-            var viagemAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarViagem(1 ,viagemParaAtualizar);
+            var viagemAtualizada = await ViagemApiFixture.ViagemApiClient.AtualizarViagem(viagemParaAtualizar);
             //assert
             Assert.Equal(viagemParaAtualizar.NumeroServico, viagemAtualizada.NumeroServico);
         }

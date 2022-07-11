@@ -21,14 +21,12 @@ namespace ViagemAPI.Data.Repository
         public ReadViagemDto CriarNovaViagem(Viagem viagemParaCriar)
         {
 
-           if(CheckarMesmoNumero(viagemParaCriar.NumeroServico, viagemParaCriar.DataPartida))
-           {
                 
                 Context.Add(viagemParaCriar);
                 if(Context.SaveChanges() > 0)
                     return BuscarViagemPorId(viagemParaCriar.Id);
                 throw new Exception("Erro na criação da viagem."); 
-           }
+
 
            return null;
 
@@ -56,8 +54,8 @@ namespace ViagemAPI.Data.Repository
                      DataChegada = viagens.DataChegada
                  };
 
-
-             return viagensExistentes;
+            if(viagensExistentes.ToList().Count > 0) return viagensExistentes;
+            return null;
 
         }
 
@@ -113,8 +111,8 @@ namespace ViagemAPI.Data.Repository
                          DataChegada = viagens.DataChegada
                      };
 
-
-                return viagensQuery;
+            if (viagensQuery.ToList().Count > 0) return viagensQuery;
+            return null;
 
 
 
@@ -151,9 +149,9 @@ namespace ViagemAPI.Data.Repository
             IEnumerable<Viagem> viagensComEsseNumero = Context.Viagem.Where(v => v.NumeroServico == numeroParaCheckar);
             foreach(var viagem in viagensComEsseNumero)
             {
-                if (viagem.DataPartida.Year == dataPartida.Year && 
-                    viagem.DataPartida.Month == dataPartida.Month && 
-                    viagem.DataPartida.Day == dataPartida.Day) throw new Exception("Números de serviço devem ser únicos no dia.");
+                if (viagem.DataPartida.Year == dataPartida.Year &&
+                    viagem.DataPartida.Month == dataPartida.Month &&
+                    viagem.DataPartida.Day == dataPartida.Day) return false;
             }
             return true;
         }

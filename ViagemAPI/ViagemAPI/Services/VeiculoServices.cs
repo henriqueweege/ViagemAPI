@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Text.RegularExpressions;
 using ViagemAPI.Data.Dto.Veiculo;
 using ViagemAPI.Model;
 using ViagemAPI.Services.ServicesContracts;
@@ -47,6 +48,16 @@ namespace ViagemAPI.Services
             veiculoMapeado = Mapper.Map<Veiculo>(veiculoParaMapear);
             if (veiculoMapeado != null) return veiculoMapeado;
             throw new Exception("Erro no mapeamento");
+        }
+        public bool CheckarFormatoPlaca(string placaParaCheckar)
+        {
+            var regexPlacaAntiga = new Regex(@"^([A-Z]){3}-(\d){4}$");
+            var regexPlacaNova = new Regex(@"^([A-Z]){3}(\d){1}([A-Z]){1}(\d){2}$");
+            if (regexPlacaAntiga.IsMatch(placaParaCheckar) || regexPlacaNova.IsMatch(placaParaCheckar))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

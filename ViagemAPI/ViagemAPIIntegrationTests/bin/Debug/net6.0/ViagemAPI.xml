@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ViagemAPI</name>
+    </assembly>
+    <members>
+        <member name="M:ViagemAPI.Controller.LinhaController.AdicionarLinha(ViagemAPI.Data.Dto.Linha.CreateLinhaDto)">
+            <summary>
+            Adicionar linha.
+            </summary>
+            <param name="linhaDto">Linha para ser adicionada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.LinhaController.BuscarTodasAsLinha">
+            <summary>
+            Buscar todas as linhas.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.LinhaController.BuscarLinhaPorId(System.Int32)">
+            <summary>
+            Buscar linha por id.
+            </summary>
+            <param name="id">Id  a ser pesquisado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.LinhaController.BuscarLinhaPorNumero(System.Int32)">
+            <summary>
+            Buscar linha por número.
+            </summary>
+            <param name="numero">Numero da linha para pesquisar.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.LinhaController.AtualizarLinha(ViagemAPI.Data.Dto.Linha.UpdateLinhaDto)">
+            <summary>
+            Atualizar linha.
+            </summary>
+            <param name="linhaDto">Linha a ser atualizada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.LinhaController.DeletarLinha(System.Int32)">
+            <summary>
+            Deletar linha.
+            </summary>
+            <param name="id">Id da linha a ser deletada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.AdicionarMotorista(ViagemAPI.Data.Dto.Motorista.CreateMotoristaDto)">
+            <summary>
+            Adicionar motorista.
+            </summary>
+            <param name="motoristaDto">Motorista para ser adicionado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.BuscarTodasOsMotorista">
+            <summary>
+            Buscar todos os  motoristas.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.BuscarMotoristaPorId(System.Int32)">
+            <summary>
+            Buscar motorista por id.
+            </summary>
+            <param name="id">Id  a ser pesquisado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.BuscarMotoristaPorCpf(System.String)">
+            <summary>
+            Buscar motorista por Cpf.
+            </summary>
+            <param name="cpf">Cpf do motorista para pesquisar.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.AtualizarMotorista(ViagemAPI.Data.Dto.Motorista.UpdateMotoristaDto)">
+            <summary>
+            Atualizar motorista.
+            </summary>
+            <param name="motoristaDto">Motorista a ser atualizado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.MotoristaController.DeletarMotorista(System.Int32)">
+            <summary>
+            Deletar motorista.
+            </summary>
+            <param name="id">Id do motorista a ser deletado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.AdicionarVeiculo(ViagemAPI.Data.Dto.Veiculo.CreateVeiculoDto)">
+            <summary>
+            Adicionar veiculo.
+            </summary>
+            <param name="veiculoDto">Veiculo para ser adicionado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.BuscarTodosOsVeiculo">
+            <summary>
+            Buscar todos os veiculos.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.BuscarVeiculoPorId(System.Int32)">
+            <summary>
+            Buscar veiculo por id.
+            </summary>
+            <param name="id">Id  a ser pesquisado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.BuscarVeiculoPelaPlaca(System.String)">
+            <summary>
+            Buscar veiculo pela placa.
+            </summary>
+            <param name="placa">Placa do veiculo para pesquisar.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.AtualizarVeiculo(ViagemAPI.Data.Dto.Veiculo.UpdateVeiculoDto)">
+            <summary>
+            Atualizar veiculo.
+            </summary>
+            <param name="veiculoDto">Veiculo a ser atualizado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.VeiculoController.DeletarVeiculo(System.Int32)">
+            <summary>
+            Deletar veiculo.
+            </summary>
+            <param name="id">Id do veiculo a ser deletado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.AdicionarViagem(ViagemAPI.Data.Dto.Viagem.CreateViagemDto)">
+            <summary>
+            Adicionar viagem.
+            </summary>
+            <param name="viagemDto">Viagem para ser adicionada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.BuscarTodasAsViagem">
+            <summary>
+            Buscar todas as viagens.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.BuscarViagemPorId(System.Int32)">
+            <summary>
+            Buscar viagem por id.
+            </summary>
+            <param name="id">Id  a ser pesquisado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.BuscarViagemPorData(System.DateTime)">
+            <summary>
+            Buscar viagem pela data.
+            </summary>
+            <param name="dataParaBusca">Data da viagem para pesquisar.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.AtualizarViagem(ViagemAPI.Data.Dto.Viagem.UpdateViagemDto)">
+            <summary>
+            Atualizar viagem.
+            </summary>
+            <param name="viagemParaAtualizarDto">Viagem a ser atualizada.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ViagemAPI.Controller.ViagemController.DeletarViagem(System.Int32)">
+            <summary>
+            Deletar viagem.
+            </summary>
+            <param name="id">Id da viagem a ser deletada.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

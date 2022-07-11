@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Text.RegularExpressions;
 using ViagemAPI.Data;
 using ViagemAPI.Data.Dto.Motorista;
 using ViagemAPI.Model;
@@ -48,6 +49,16 @@ namespace ViagemAPI.Services
             motoristaMapeado = Mapper.Map<Motorista>(motoristaParaMapear);
             if (motoristaMapeado != null) return motoristaMapeado;
             throw new Exception("Erro no mapeamento");
+        }
+
+        public bool CheckarFormatoCpf(string cpf)
+        {
+            var regex = new Regex(@"^(\d{11})$");
+            if (regex.IsMatch(cpf))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

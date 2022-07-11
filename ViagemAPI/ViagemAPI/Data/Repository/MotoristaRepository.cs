@@ -17,10 +17,7 @@ namespace ViagemAPI.Data.Repository
             Context = context;
         }
         public Motorista CriarNovoMotorista(Motorista motoristaParaCriar)
-        {
-
-            var cpfCheckado = MesmoCpfCheck(motoristaParaCriar.Cpf);
-            if (cpfCheckado == true) throw new Exception("Cpf já cadastrado");
+        { 
 
             Context.Add(motoristaParaCriar);
             if (Context.SaveChanges() > 0) return Context.Motorista.OrderBy(m => m.Id).LastOrDefault(m => m.Cpf == motoristaParaCriar.Cpf);
@@ -45,7 +42,7 @@ namespace ViagemAPI.Data.Repository
         {
 
             var motoristasExistentes = Context.Motorista.ToList();
-            if (motoristasExistentes != null) return motoristasExistentes;
+            if (motoristasExistentes.ToList().Count > 0) return motoristasExistentes;
             return null;
 
         }

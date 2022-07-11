@@ -9,7 +9,9 @@ namespace ViagemAPI.Services.ServicesContracts
         public Motorista TransformaUpdateDtoEmMotorista(UpdateMotoristaDto motoristaParaMapear);
         public ReadMotoristaDto TransformaMotoristaEmViewModel(Motorista motoristaParaMapear);
         public IEnumerable<ReadMotoristaDto> TransformaMotoristasEmViewModelList(IEnumerable<Motorista> listaParaConverter);
-        
+        public bool CheckarFormatoCpf(string cpf);
+
+
 
 
     }

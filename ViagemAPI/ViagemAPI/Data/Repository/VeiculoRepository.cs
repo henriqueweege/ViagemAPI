@@ -30,7 +30,7 @@ namespace ViagemAPI.Data.Repository
         {
 
             var veiculosExistentes = Context.Veiculo;
-            if (veiculosExistentes != null) return veiculosExistentes;
+            if (veiculosExistentes.ToList().Count > 0) return veiculosExistentes;
             return null;
         }
 
@@ -63,9 +63,12 @@ namespace ViagemAPI.Data.Repository
         public bool DeletarVeiculoPorId(int id)
         {
 
-            var veiculoParaDeletar = Context.Motorista.FirstOrDefault(v => v.Id == id);
-            if (veiculoParaDeletar != null) Context.Motorista.Remove(veiculoParaDeletar);
-            else return false;
+            var veiculoParaDeletar = Context.Veiculo.FirstOrDefault(v => v.Id == id);
+            if (veiculoParaDeletar != null) Context.Veiculo.Remove(veiculoParaDeletar);
+            else 
+            {
+                return false;
+            }
 
             if (Context.SaveChanges() > 0) return true;
             return false;

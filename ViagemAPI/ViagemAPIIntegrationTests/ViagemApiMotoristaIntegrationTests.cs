@@ -19,7 +19,7 @@ namespace ViagemApiIntegrationTests
         {
             Random randNum = new Random();
             //arrange
-            var motoristaDto = new MotoristaDto()
+            var motoristaDto = new CreateMotoristaDto()
             {
                 Nome = "MotoristaTeste",
                 Cpf= $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
@@ -38,7 +38,7 @@ namespace ViagemApiIntegrationTests
         {
             //arrange
             //act
-            IEnumerable<MotoristaViewModel> motoristas = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsMotoristas();
+            var motoristas = await ViagemApiFixture.ViagemApiClient.BuscarTodosOsMotoristas();
 
             //assert
             Assert.True(motoristas.Count() > 1);
@@ -48,11 +48,12 @@ namespace ViagemApiIntegrationTests
         [Fact]
         public async Task BuscarMotoristaPorIdDeveriaRetornarObjetoValido()
         {
+            Random randNum = new Random();
             //arrange
-            var motoristaDto = new MotoristaDto()
+            var motoristaDto = new CreateMotoristaDto()
             {
                 Nome = "MotoristaTeste",
-                Cpf = "00000000000"
+                Cpf = $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
             };
             var motoristaAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarMotorista(motoristaDto);
             //act
@@ -63,13 +64,14 @@ namespace ViagemApiIntegrationTests
 
 
         [Fact]
-        public async Task DeletarMotoristaPorIdDeveriaExcluirLinhaCriada()
+        public async Task DeletarMotoristaPorIdDeveriaExcluirMotoristaCriado()
         {
+            Random randNum = new Random();
             //arrange
-            var motoristaDto = new MotoristaDto()
+            var motoristaDto = new CreateMotoristaDto()
             {
                 Nome = "MotoristaTeste",
-                Cpf = "00000000000"
+                Cpf = $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
             };
 
             //act
@@ -88,25 +90,35 @@ namespace ViagemApiIntegrationTests
         public async Task BuscarMotoristaPorCpfDeveriaRetornarObjetoValido()
         {
             //arrange
-            var motoristaPorId = ViagemApiFixture.ViagemApiClient.BuscarMotoristaPorId(3);
+            Random randNum = new Random();
+            var motoristaDto = new CreateMotoristaDto()
+            {
+                Nome = "MotoristaTeste",
+                Cpf = $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
+            };
+            var motoristaAdicionado = await ViagemApiFixture.ViagemApiClient.AdicionarMotorista(motoristaDto);
+
             //act
-           // var motorista = await ViagemApiFixture.ViagemApiClient.BuscarMotoristaPorCpf(motoristaPorId.Cpf);
+            var motorista = await ViagemApiFixture.ViagemApiClient.BuscarMotoristaPorCpf(motoristaDto.Cpf);
 
             //assert
-            //Assert.True(motorista.Cpf != null);
+            Assert.Equal(motorista.Id, motoristaAdicionado.Id);
         }
 
         [Fact]
         public async Task AtualizarMotoristaDeveriaRetornarObjetoValido()
         {
             //arrange
-            var motoristaParaAtualizar = new MotoristaDto()
+            Random randNum = new Random();
+
+            var motoristaParaAtualizar = new UpdateMotoristaDto()
             {
+                Id= 3,
                 Nome = "MotoristaAtualizado",
-                Cpf = "88888888888"
+                Cpf = $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
             };
             //act
-            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarMotorista(1, motoristaParaAtualizar);
+            var motoristaAtualizado = await ViagemApiFixture.ViagemApiClient.AtualizarMotorista(motoristaParaAtualizar);
             //assert
             Assert.Equal(motoristaParaAtualizar.Cpf, motoristaAtualizado.Cpf);
         }

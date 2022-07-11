@@ -72,3 +72,5 @@ C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ViagemAPI.genru
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ref\ViagemAPI.dll
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\bin\Debug\net6.0\xunit.abstractions.dll
 C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\bin\Debug\net6.0\xunit.core.dll
+C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\bin\Debug\net6.0\ViagemAPI.xml
+C:\TestesPraticos\ViagemAPI\ViagemAPI\ViagemAPI\obj\Debug\net6.0\ViagemAPI.xml
