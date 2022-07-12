@@ -113,7 +113,7 @@ namespace ViagemApiIntegrationTests
 
             var motoristaParaAtualizar = new UpdateMotoristaDto()
             {
-                Id= 3,
+                Id= 1,
                 Nome = "MotoristaAtualizado",
                 Cpf = $"0{randNum.Next(0, 9)}0{randNum.Next(0, 9)}00{randNum.Next(0, 9)}{randNum.Next(0, 9)}000"
             };

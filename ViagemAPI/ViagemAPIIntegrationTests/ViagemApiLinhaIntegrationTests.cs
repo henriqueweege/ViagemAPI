@@ -40,7 +40,7 @@ namespace ViagemApiIntegrationTests
             var linhas = await ViagemApiFixture.ViagemApiClient.BuscarTodasAsLinha();
 
             //assert
-            Assert.True(linhas.Count() > 1);
+            Assert.True(linhas.Count() >= 1);
 
         }
 
@@ -116,7 +116,7 @@ namespace ViagemApiIntegrationTests
             //arrange
             var linhaParaAtualizar = new UpdateLinhaDto()
             {
-                Id = 3,
+                Id = 1,
                 Nome = "LinhaAtualizada",
                 Numero = 8,
                 Origem = "Qualquer",

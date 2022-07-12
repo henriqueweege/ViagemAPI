@@ -12,5 +12,7 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
         Veiculo BuscarVeiculoPelaPlaca(string placa);
         Veiculo AtualizarVeiculo(Veiculo veiculoParaAtualizar);
         bool DeletarVeiculoPorId(int id);
+
+        bool CheckarSePlacaEstaDiponivel(string placa);
     }
 }

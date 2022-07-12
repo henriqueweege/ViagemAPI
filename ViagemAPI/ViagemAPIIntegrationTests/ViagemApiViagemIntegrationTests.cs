@@ -22,8 +22,8 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new CreateViagemDto()
             {
                 NumeroServico = $"{randNum.Next(0,100)}",
-                IdLinha = 3,
-                IdMotorista = 2,
+                IdLinha = 1,
+                IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -56,8 +56,8 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new CreateViagemDto()
             {
                 NumeroServico = $"{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0, 9)}{randNum.Next(0,9)}",
-                IdLinha = 3,
-                IdMotorista = 2,
+                IdLinha = 1,
+                IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -78,8 +78,8 @@ namespace ViagemApiIntegrationTests
             var viagemDto = new CreateViagemDto()
             {
                 NumeroServico = $"{randNum.Next(1000, 100000)}",
-                IdLinha = 3,
-                IdMotorista = 2,
+                IdLinha =1,
+                IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };
@@ -113,10 +113,10 @@ namespace ViagemApiIntegrationTests
 
             var viagemParaAtualizar = new UpdateViagemDto()
             {
-                Id=6,
+                Id=1,
                 NumeroServico = $"{randNum.Next()}",
-                IdLinha = 3,
-                IdMotorista = 2,
+                IdLinha = 1,
+                IdMotorista = 1,
                 DataPartida = DateTime.Today,
                 DataChegada = DateTime.Today
             };

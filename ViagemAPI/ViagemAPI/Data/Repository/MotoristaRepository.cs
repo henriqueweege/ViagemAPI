@@ -69,7 +69,7 @@ namespace ViagemAPI.Data.Repository
 
         }
 
-        public bool MesmoCpfCheck(string cpf)
+        public bool CheckarSeCpfEstaDiponivel(string cpf)
         {
 
             var existeMotorista = Context.Motorista.FirstOrDefault(m => m.Cpf == cpf);

@@ -31,6 +31,7 @@ namespace ViagemAPI.Controller
         public ActionResult<ReadMotoristaDto> AdicionarMotorista(CreateMotoristaDto motoristaDto)
         {
             if (!Services.CheckarFormatoCpf(motoristaDto.Cpf)) return BadRequest("Cpf em formato inválido.");
+            if (Repository.CheckarSeCpfEstaDiponivel(motoristaDto.Cpf)) return BadRequest("Cpf já cadastrado.");
             var motoristaMapeado = Services.TransformaCreateDtoEmMotorista(motoristaDto);
             var motoristaAdicionado = Repository.CriarNovoMotorista(motoristaMapeado);
             if (motoristaAdicionado != null) return Services.TransformaMotoristaEmViewModel(motoristaAdicionado);

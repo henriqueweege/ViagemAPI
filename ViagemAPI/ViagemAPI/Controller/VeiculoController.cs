@@ -33,6 +33,7 @@ namespace ViagemAPI.Controller
         public ActionResult<ReadVeiculoDto> AdicionarVeiculo(CreateVeiculoDto veiculoDto)
         {
             if (!Services.CheckarFormatoPlaca(veiculoDto.Placa)) return BadRequest("Placa em formato inválido.");
+            if (Repository.CheckarSePlacaEstaDiponivel(veiculoDto.Placa)) return BadRequest("Placa já cadastrada.");
             var veiculoAdicionado = Repository.CriarNovoVeiculo(Services.TransformaCreateDtoEmVeiculo(veiculoDto));
             if (veiculoAdicionado != null) return Ok(Services.TransformaVeiculoEmViewModel(veiculoAdicionado));
             return BadRequest("Veiculo não adicionado.");

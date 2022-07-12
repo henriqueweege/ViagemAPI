@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger6.json" CodeGenerator="NSwagCSharp" Namespace="ViagemApi.Client" ClassName="ViagemApiClient">
+    <OpenApiReference Include="OpenAPIs\swagger7.json" CodeGenerator="NSwagCSharp" Namespace="ViagemApi.Client" ClassName="ViagemApiClient">
       <SourceUri>https://localhost:7158/swagger/v1/swagger.json</SourceUri>
     </OpenApiReference>
   </ItemGroup>
@@ -47,6 +47,7 @@
     <None Update="OpenAPIs\swagger3.json" ClassName="ViagemApiClient" />
     <None Update="OpenAPIs\swagger4.json" ClassName="ViagemApiClient" />
     <None Update="OpenAPIs\swagger5.json" ClassName="ViagemApiClient" />
+    <None Update="OpenAPIs\swagger6.json" ClassName="ViagemApiClient" />
   </ItemGroup>
 
 </Project>

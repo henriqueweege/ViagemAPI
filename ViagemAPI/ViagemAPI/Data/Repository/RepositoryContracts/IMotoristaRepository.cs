@@ -14,5 +14,7 @@ namespace ViagemAPI.Data.Repository.RepositoryContracts
         Motorista AtualizarMotorista(Motorista motoristaParaAtualizar);
         bool DeletarMotoristaPorId(int id);
 
+        bool CheckarSeCpfEstaDiponivel(string cpf);
+
     }
 }

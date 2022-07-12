@@ -74,5 +74,14 @@ namespace ViagemAPI.Data.Repository
             return false;
         }
 
+        public bool CheckarSePlacaEstaDiponivel(string placa)
+        {
+
+            var existeVeiculo = Context.Veiculo.FirstOrDefault(v => v.Placa == placa);
+            if (existeVeiculo == null) return false;
+            return true;
+
+        }
+
     }
 }
